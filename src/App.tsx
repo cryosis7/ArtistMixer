@@ -41,7 +41,6 @@ const App: React.FC = () => {
                 clientId={process.env.REACT_APP_SPOTIFY_CLIENT_ID ?? ""}
                 redirectUri="http://localhost:3000"
                 scopes={["user-read-email", "user-read-private"]}
-                onAccessToken={setAccessToken}
               />
             }
           />
