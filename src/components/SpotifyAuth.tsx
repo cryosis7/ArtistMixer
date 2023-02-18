@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { Navigate, redirect } from "react-router";
 
 interface SpotifyAuthProps {
   clientId: string;
@@ -15,6 +16,11 @@ const SpotifyAuth: React.FC<SpotifyAuthProps> = ({
   onAccessToken,
 }) => {
   const [accessToken, setAccessToken] = useState<string>("");
+
+  const assignAccessToken = (token: string) => {
+    setAccessToken(token);
+    onAccessToken(token);
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -43,8 +49,7 @@ const SpotifyAuth: React.FC<SpotifyAuthProps> = ({
       })
         .then((res) => res.json())
         .then((data) => {
-          setAccessToken(data.access_token);
-          onAccessToken(data.access_token);
+          assignAccessToken(data.access_token);
         })
         .catch((error) => {
           console.error("Error fetching Spotify access token:", error);
@@ -66,7 +71,7 @@ const SpotifyAuth: React.FC<SpotifyAuthProps> = ({
   return (
     <div>
       {accessToken ? (
-        <p>Successfully authorized with Spotify</p>
+        <Navigate to="/" />
       ) : (
         <button onClick={authorizeSpotify}>Authorize with Spotify</button>
       )}
