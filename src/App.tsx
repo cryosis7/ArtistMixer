@@ -9,13 +9,14 @@ import {
 } from "react-router-dom";
 
 const App: React.FC = () => {
-  const [accessToken, setAccessToken] = useState<string>("");
+  const [code, setCode] = useState<string>("");
+  const [token, setToken] = useState<string>("");
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
     if (code) {
-      setAccessToken(code);
+      setCode(code);
     }
   }, []);
 
@@ -48,8 +49,26 @@ const App: React.FC = () => {
             path="/"
             element={
               <>
-                {accessToken ? (
-                  <p>Access token: {accessToken}</p>
+                {code ? (
+                  <>
+                    <div>
+                      <p>Code: {code}</p>
+                      {token ?? <p>Token: {token}</p>}
+                    </div>
+                    <button
+                      onClick={() => {
+                        const url =
+                          "https://jrfg22ir6f.execute-api.ap-southeast-2.amazonaws.com/api/authenticate";
+                        fetch(`${url}?code=${code}`)
+                          .then((res) => res.json())
+                          .then((data) => {
+                            setToken(data.access_token);
+                          });
+                      }}
+                    >
+                      Get Token
+                    </button>
+                  </>
                 ) : (
                   <Link to="/login">Login</Link>
                 )}
