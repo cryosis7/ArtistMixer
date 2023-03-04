@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import SpotifyAuth from "./components/SpotifyAuth";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, redirect } from "react-router-dom";
+
+const IP_ADDRESS = "http://192.168.1.8:3000";
 
 const App: React.FC = () => {
   const [code, setCode] = useState<string>("");
@@ -31,6 +27,9 @@ const App: React.FC = () => {
             <li>
               <a href="/login">Login</a>
             </li>
+            <li>
+              <a href="/search/nf">Search</a>
+            </li>
           </ul>
         </nav>
 
@@ -40,7 +39,7 @@ const App: React.FC = () => {
             element={
               <SpotifyAuth
                 clientId={process.env.REACT_APP_SPOTIFY_CLIENT_ID ?? ""}
-                redirectUri="http://localhost:3000"
+                redirectUri={IP_ADDRESS}
                 scopes={["user-read-email", "user-read-private"]}
               />
             }
@@ -60,9 +59,10 @@ const App: React.FC = () => {
                         const url =
                           "https://jrfg22ir6f.execute-api.ap-southeast-2.amazonaws.com/api/authenticate";
                         fetch(`${url}?code=${code}`)
-                          .then((res) => res.json())
-                          .then((data) => {
-                            setToken(data.access_token);
+                          .then(() => console.log("authentication complete"))
+                          .catch((err) => console.log(err))
+                          .finally(() => {
+                            redirect("/search/nf");
                           });
                       }}
                     >
@@ -73,6 +73,27 @@ const App: React.FC = () => {
                   <Link to="/login">Login</Link>
                 )}
               </>
+            }
+          />
+          <Route
+            path="/search/nf"
+            element={
+              <button
+                onClick={() => {
+                  const url =
+                    "https://jrfg22ir6f.execute-api.ap-southeast-2.amazonaws.com/api/spotify/search";
+                  fetch(`${url}?q=NF&type=artist`, {
+                    method: "GET",
+                    credentials: "include",
+                  })
+                    .then((res) => res.json())
+                    .then((data) => {
+                      console.log(data);
+                    });
+                }}
+              >
+                Search
+              </button>
             }
           />
         </Routes>
