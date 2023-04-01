@@ -31,6 +31,7 @@ export const RequestToken: React.FC<RequestTokenProps> = ({
             .then((data) => {
               setToken(data.token);
               console.log("Token set: ", data.token);
+              localStorage.setItem("token", data.token);
             })
             .catch((err) => console.log(err));
         }}

@@ -15,7 +15,7 @@ export const NavBar = () => {
       </ul>
       <ul>
         <li>
-          <Link to="/search/nf">Search</Link>
+          <Link to="/search">Search</Link>
         </li>
       </ul>
     </nav>
