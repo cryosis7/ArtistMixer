@@ -1,3 +1,4 @@
+import Button from "@mui/material/Button";
 import { Dispatch, SetStateAction } from "react";
 
 interface RequestTokenProps {
@@ -20,7 +21,8 @@ export const RequestToken: React.FC<RequestTokenProps> = ({
   return (
     <>
       <div>{code}</div>
-      <button
+      <Button
+        variant="contained"
         onClick={() => {
           const url =
             "https://jrfg22ir6f.execute-api.ap-southeast-2.amazonaws.com/api/authenticate";
@@ -34,7 +36,7 @@ export const RequestToken: React.FC<RequestTokenProps> = ({
         }}
       >
         Get Token
-      </button>
+      </Button>
     </>
   );
 };

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { SetStateAction } from "react";
 import { RequestToken } from "./RequestToken";
+import Button from "@mui/material/Button";
 
 interface SpotifyAuthProps {
   code: string;
@@ -40,9 +41,9 @@ const SpotifyAuth: React.FC<SpotifyAuthProps> = ({
   return code ? (
     <RequestToken code={code} setToken={setToken} />
   ) : (
-    <button role="link" onClick={authorizeSpotify}>
+    <Button variant="contained" role="link" onClick={authorizeSpotify}>
       Authorize Spotify
-    </button>
+    </Button>
   );
 };
 
