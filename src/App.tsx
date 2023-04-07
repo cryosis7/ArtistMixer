@@ -3,8 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { HomePage } from "./components/HomePage";
 import { Login } from "./components/Login";
 import { NavBar } from "./components/NavBar";
-import { Search } from "./components/Search/Search";
 import { RequireAuth } from "./components/RequireAuth";
+import { SearchContainer } from "./components/Search/SearchContainer";
 
 const App: React.FC = () => {
   const [code, setCode] = useState<string>("");
@@ -33,7 +33,7 @@ const App: React.FC = () => {
           path="/search"
           element={
             <RequireAuth>
-              <Search />
+              <SearchContainer />
             </RequireAuth>
           }
         />
