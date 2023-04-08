@@ -1,46 +1,20 @@
 import CircularProgress from "@mui/material/CircularProgress";
-import { useEffect, useState } from "react";
-import { SearchForm } from "./SearchForm";
+import { useState } from "react";
+import { SpotifyMedia } from "../SourceMedia/SourceMediaContainer";
 import { SpotifyMediaList } from "../SpotifyMediaList/SpotifyMediaList";
+import { SearchForm } from "./SearchForm";
 
-interface SearchContainerProps {}
-
-export type SpotifyMedia =
-  | SpotifyApi.TrackObjectFull
-  | SpotifyApi.ArtistObjectFull
-  | SpotifyApi.AlbumObjectFull;
-
-interface MediaItem {
-  [id: string]: {
-    name: string;
-  };
-}
-interface SourceMedia {
-  artist?: MediaItem;
-  track?: MediaItem;
-  album?: MediaItem;
+interface SearchContainerProps {
+  addSourceMedia: (media: SpotifyMedia) => void;
 }
 
-export const SearchContainer: React.FC<SearchContainerProps> = () => {
+export const SearchContainer: React.FC<SearchContainerProps> = ({
+  addSourceMedia,
+}) => {
   const [searchResults, setSearchResults] = useState<SpotifyApi.SearchResponse>(
     {}
   );
   const [isSearching, setIsSearching] = useState<boolean>(false);
-  const [sourceMedia, setSourceMedia] = useState<SourceMedia>({});
-
-  useEffect(() => {
-    console.log(sourceMedia);
-  }, [sourceMedia]);
-
-  const addSourceMedia = (media: SpotifyMedia) => {
-    setSourceMedia({
-      ...sourceMedia,
-      [media.type]: {
-        ...sourceMedia[media.type],
-        [media.id]: { name: media.name },
-      },
-    });
-  };
 
   return (
     <>

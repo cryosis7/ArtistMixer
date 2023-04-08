@@ -13,8 +13,8 @@ interface SearchProps {
   setIsSearching: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-type ContentTypes = "artist" | "album" | "track" | "playlist";
-const contentTypes: ContentTypes[] = ["artist", "album", "track", "playlist"];
+type ContentTypes = "artist" | "album" | "track";
+const contentTypes: ContentTypes[] = ["artist", "album", "track"];
 
 export const SearchForm: React.FC<SearchProps> = ({
   setSearchResults,
