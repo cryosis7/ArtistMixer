@@ -22,7 +22,6 @@ export const SearchForm: React.FC<SearchProps> = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [contentType, setContentType] = useState<ContentTypes>("artist");
-  // const [searchResults, setSearchResults] = useState<string>("");
   const token = localStorage.getItem("token") ?? "";
 
   if (!token) {

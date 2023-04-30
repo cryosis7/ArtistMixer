@@ -1,15 +1,15 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import { useState } from "react";
-import { SpotifyMedia } from "../SourceMedia/SourceMediaContainer";
+import { SpotifyMedia } from "../SelectedMedia/SelectedMediaContainer";
 import { SpotifyMediaList } from "../SpotifyMediaList/SpotifyMediaList";
 import { SearchForm } from "./SearchForm";
 
 interface SearchContainerProps {
-  addSourceMedia: (media: SpotifyMedia) => void;
+  addSelectedMedia: (media: SpotifyMedia) => void;
 }
 
 export const SearchContainer: React.FC<SearchContainerProps> = ({
-  addSourceMedia,
+  addSelectedMedia,
 }) => {
   const [searchResults, setSearchResults] = useState<SpotifyApi.SearchResponse>(
     {}
@@ -24,7 +24,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
       />
       {isSearching && <CircularProgress size={"10rem"} />}
       {!isSearching && searchResults && (
-        <SpotifyMediaList media={searchResults} addItem={addSourceMedia} />
+        <SpotifyMediaList media={searchResults} addItem={addSelectedMedia} />
       )}
     </>
   );

@@ -1,9 +1,9 @@
 import Grid from "@mui/material/Grid";
 import {
-  SourceMedia,
-  SourceMediaContainer,
+  SelectedMedia,
+  SelectedMediaContainer,
   SpotifyMedia,
-} from "./SourceMedia/SourceMediaContainer";
+} from "./SelectedMedia/SelectedMediaContainer";
 import { useEffect, useState } from "react";
 import { SearchContainer } from "./Search/SearchContainer";
 import Grid2 from "@mui/material/Unstable_Grid2";
@@ -11,17 +11,17 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 interface PlaylistGeneratorProps {}
 
 export const PlaylistGenerator: React.FC<PlaylistGeneratorProps> = () => {
-  const [sourceMedia, setSourceMedia] = useState<SourceMedia>({});
+  const [selectedMedia, setSelectedMedia] = useState<SelectedMedia>({});
 
   useEffect(() => {
-    console.log(sourceMedia);
-  }, [sourceMedia]);
+    console.log(selectedMedia);
+  }, [selectedMedia]);
 
-  const addSourceMedia = (media: SpotifyMedia) => {
-    setSourceMedia({
-      ...sourceMedia,
+  const addSelectedMedia = (media: SpotifyMedia) => {
+    setSelectedMedia({
+      ...selectedMedia,
       [media.type]: {
-        ...sourceMedia[media.type],
+        ...selectedMedia[media.type],
         [media.id]: { name: media.name },
       },
     });
@@ -30,10 +30,10 @@ export const PlaylistGenerator: React.FC<PlaylistGeneratorProps> = () => {
   return (
     <Grid2 container spacing={2}>
       <Grid2 xs={6} md={4}>
-        <SourceMediaContainer sourceMedia={sourceMedia} />
+        <SelectedMediaContainer selectedMedia={selectedMedia} />
       </Grid2>
       <Grid2 xs>
-        <SearchContainer addSourceMedia={addSourceMedia} />
+        <SearchContainer addSelectedMedia={addSelectedMedia} />
       </Grid2>
     </Grid2>
   );

@@ -1,16 +1,16 @@
 import { ToTitleCase } from "../../Utils";
-import { MediaItem, SourceMedia } from "./SourceMediaContainer";
+import { MediaItem, SelectedMedia } from "./SelectedMediaContainer";
 
-interface SourceMediaListProps {
-  sourceMedia: SourceMedia;
+interface SelectedMediaListProps {
+  selectedMedia: SelectedMedia;
 }
 
-export const SourceMediaList: React.FC<SourceMediaListProps> = ({
-  sourceMedia,
+export const SelectedMediaList: React.FC<SelectedMediaListProps> = ({
+  selectedMedia,
 }) => {
   return (
     <div>
-      {Object.entries(sourceMedia).map(([contentType, media]) => {
+      {Object.entries(selectedMedia).map(([contentType, media]) => {
         return (
           <div key={contentType}>
             <h2>{ToTitleCase(contentType)}</h2>
