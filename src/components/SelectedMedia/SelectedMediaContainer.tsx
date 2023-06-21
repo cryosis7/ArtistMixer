@@ -1,7 +1,12 @@
 import Button from "@mui/material/Button";
 import { SelectedMediaList } from "./SelectedMediaList";
-import React from "react";
+import React, { useState } from "react";
 import { redirect } from "react-router-dom";
+import {
+  PlaylistContract,
+  Song,
+} from "../../models/datacontracts/PlaylistContract";
+import { DraftPlaylist } from "./DraftPlaylist";
 
 export type SpotifyMedia =
   | SpotifyApi.TrackObjectFull
@@ -26,6 +31,7 @@ interface SelectedMediaContainerProps {
 export const SelectedMediaContainer: React.FC<SelectedMediaContainerProps> = ({
   selectedMedia,
 }) => {
+  const [playlist, setPlaylist] = useState<PlaylistContract>();
   const token = localStorage.getItem("token") ?? "";
 
   if (!token) {
@@ -47,8 +53,25 @@ export const SelectedMediaContainer: React.FC<SelectedMediaContainerProps> = ({
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        // setSearchResults(data);
-        // TODO: get the random songs from the api.
+        const newPlaylist: PlaylistContract = Object.assign({}, data);
+
+        // Mapping the Song array
+        if (data.songs) {
+          newPlaylist.songs = data.songs.map((songData: any) => {
+            const song: Song = Object.assign({}, songData);
+
+            // Mapping the Artist array inside each Song
+            if (song.artists) {
+              song.artists = song.artists.map((artistData: any) =>
+                Object.assign({}, artistData)
+              );
+            }
+
+            return song;
+          });
+        }
+
+        setPlaylist(newPlaylist);
       })
       .catch((err) => {
         // If unauthorized, redirect to login
@@ -69,6 +92,7 @@ export const SelectedMediaContainer: React.FC<SelectedMediaContainerProps> = ({
       <Button variant="contained" color="primary" onClick={generatePlaylist}>
         Generate Playlist
       </Button>
+      {playlist && <DraftPlaylist playlist={playlist} />}
     </React.Fragment>
   );
 };
