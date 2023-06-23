@@ -1,10 +1,9 @@
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
-import { ToTitleCase } from "../../Utils";
-import DEFAULT_AVATAR_URL from "../../images/2x/baseline_person_black_48dp.png";
+import { ToTitleCase } from "../../../Utils";
+import DEFAULT_AVATAR_URL from "../../../images/2x/baseline_person_black_48dp.png";
 
 interface ArtistTileProps {
   artist: SpotifyApi.ArtistObjectFull;

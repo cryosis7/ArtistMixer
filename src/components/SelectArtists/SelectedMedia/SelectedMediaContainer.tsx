@@ -5,24 +5,10 @@ import { redirect } from "react-router-dom";
 import {
   PlaylistContract,
   Song,
-} from "../../models/datacontracts/PlaylistContract";
-import { DraftPlaylist } from "./DraftPlaylist";
-
-export type SpotifyMedia =
-  | SpotifyApi.TrackObjectFull
-  | SpotifyApi.ArtistObjectFull
-  | SpotifyApi.AlbumObjectFull;
-
-export interface MediaItem {
-  [id: string]: {
-    name: string;
-  };
-}
-export interface SelectedMedia {
-  artist?: MediaItem;
-  track?: MediaItem;
-  album?: MediaItem;
-}
+} from "../../../models/datacontracts/PlaylistContract";
+import { DraftPlaylist } from "../../RefinePlaylist/DraftPlaylist";
+import { SelectedMedia } from "../SelectArtists";
+import { TempGeneratePlaylist } from "../../GeneratePlaylist/TempGeneratePlaylist";
 
 interface SelectedMediaContainerProps {
   selectedMedia: SelectedMedia;
@@ -87,12 +73,9 @@ export const SelectedMediaContainer: React.FC<SelectedMediaContainerProps> = ({
   };
 
   return (
-    <React.Fragment>
+    <>
       <SelectedMediaList selectedMedia={selectedMedia} />
-      <Button variant="contained" color="primary" onClick={generatePlaylist}>
-        Generate Playlist
-      </Button>
-      {playlist && <DraftPlaylist playlist={playlist} />}
-    </React.Fragment>
+      <TempGeneratePlaylist selectedArtists={selectedMedia} />
+    </>
   );
 };

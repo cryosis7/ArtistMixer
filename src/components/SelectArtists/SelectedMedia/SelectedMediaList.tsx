@@ -1,5 +1,5 @@
-import { ToTitleCase } from "../../Utils";
-import { MediaItem, SelectedMedia } from "./SelectedMediaContainer";
+import { ToTitleCase } from "../../../Utils";
+import { MediaItem, SelectedMedia } from "../SelectArtists";
 
 interface SelectedMediaListProps {
   selectedMedia: SelectedMedia;

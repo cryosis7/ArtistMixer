@@ -1,16 +1,28 @@
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { useEffect, useState } from "react";
-import { withAuth } from "./RequireAuth";
-import { SearchContainer } from "./Search/SearchContainer";
-import {
-  SelectedMedia,
-  SelectedMediaContainer,
-  SpotifyMedia,
-} from "./SelectedMedia/SelectedMediaContainer";
+import { withAuth } from "../RequireAuth";
+import { SearchContainer } from "../Search/SearchContainer";
+import { SelectedMediaContainer } from "./SelectedMedia/SelectedMediaContainer";
 
-interface PlaylistGeneratorProps {}
+export type SpotifyMedia =
+  | SpotifyApi.TrackObjectFull
+  | SpotifyApi.ArtistObjectFull
+  | SpotifyApi.AlbumObjectFull;
 
-const PlaylistGenerator: React.FC<PlaylistGeneratorProps> = () => {
+export interface MediaItem {
+  [id: string]: {
+    name: string;
+  };
+}
+export interface SelectedMedia {
+  artist?: MediaItem;
+  track?: MediaItem;
+  album?: MediaItem;
+}
+
+interface SelectArtistsProps {}
+
+const SelectArtists: React.FC<SelectArtistsProps> = () => {
   const [selectedMedia, setSelectedMedia] = useState<SelectedMedia>({});
 
   useEffect(() => {
@@ -39,4 +51,4 @@ const PlaylistGenerator: React.FC<PlaylistGeneratorProps> = () => {
   );
 };
 
-export default withAuth(PlaylistGenerator);
+export default withAuth(SelectArtists);

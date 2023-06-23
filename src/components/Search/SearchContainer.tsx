@@ -1,7 +1,7 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import { useState } from "react";
-import { SpotifyMedia } from "../SelectedMedia/SelectedMediaContainer";
-import { SpotifyMediaList } from "../SpotifyMediaList/SpotifyMediaList";
+import { SpotifyMedia } from "../SelectArtists/SelectArtists";
+import { SpotifyMediaList } from "../SelectArtists/SpotifyMediaList/SpotifyMediaList";
 import { SearchForm } from "./SearchForm";
 
 interface SearchContainerProps {

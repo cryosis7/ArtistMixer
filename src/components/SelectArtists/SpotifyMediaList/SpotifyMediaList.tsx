@@ -2,7 +2,7 @@ import ImageList from "@mui/material/ImageList";
 import { ArtistTile } from "./ArtistTile";
 import { List } from "@mui/material";
 import { TrackItem } from "./TrackItem";
-import { SpotifyMedia } from "../SelectedMedia/SelectedMediaContainer";
+import { SpotifyMedia } from "../SelectArtists";
 
 interface MediaListProps {
   media: SpotifyApi.SearchResponse;
