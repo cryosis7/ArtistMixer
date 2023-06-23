@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { HomePage } from "./components/HomePage";
 import { Login } from "./components/Login";
-import { NavBar } from "./components/NavBar";
 import SelectArtists from "./components/SelectArtists/SelectArtists";
+import { NavigationBar, steps } from "./components/Navigation/NavigationBar";
 
 const App: React.FC = () => {
   const [code, setCode] = useState<string>("");
   const [token, setToken] = useState<string>("");
+  const [activeStep, setActiveStep] = useState(0);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -18,17 +18,24 @@ const App: React.FC = () => {
     }
   }, []);
 
+  const moveStep = (direction: "FORWARD" | "BACKWARD") => {
+    if (activeStep < steps.length - 1 && direction === "FORWARD") {
+      setActiveStep(activeStep + 1);
+    } else if (activeStep > 0 && direction === "BACKWARD") {
+      setActiveStep(activeStep - 1);
+    }
+  };
+
   return (
     <BrowserRouter>
-      <NavBar />
+      <NavigationBar activeStep={activeStep} />
 
       <Routes>
-        <Route path="/" element={<HomePage code={code} />} />
+        <Route path="/" element={<SelectArtists moveStep={moveStep} />} />
         <Route
           path="/login"
           element={<Login code={code} token={token} setToken={setToken} />}
         />
-        <Route path="/search" element={<SelectArtists />} />
       </Routes>
     </BrowserRouter>
   );

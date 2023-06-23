@@ -1,6 +1,7 @@
+import { Navigate } from "react-router-dom";
 import SpotifyAuth from "./SpotifyAuth";
 
-const IP_ADDRESS = "http://192.168.1.8:3000";
+const IP_ADDRESS = "http://192.168.1.8:3000/login";
 
 interface LoginProps {
   code: string;
@@ -10,7 +11,7 @@ interface LoginProps {
 
 export const Login: React.FC<LoginProps> = ({ code, token, setToken }) => {
   return token ? (
-    <div>Token aquired: {token}</div>
+    <Navigate to={"/"} />
   ) : (
     <SpotifyAuth
       code={code}

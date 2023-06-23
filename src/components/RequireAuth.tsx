@@ -5,6 +5,11 @@ interface RequireAuthProps {
   children: React.ReactElement;
 }
 
+/**
+ * DEPRECATED: Use the HoC withAuth(component)
+ * @param param0
+ * @returns
+ */
 export const RequireAuth: React.FC<RequireAuthProps> = ({ children }) => {
   const token = localStorage.getItem("token");
 

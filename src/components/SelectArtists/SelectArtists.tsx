@@ -20,9 +20,11 @@ export interface SelectedMedia {
   album?: MediaItem;
 }
 
-interface SelectArtistsProps {}
+interface SelectArtistsProps {
+  moveStep: (arg0: "FORWARD" | "BACKWARD") => void;
+}
 
-const SelectArtists: React.FC<SelectArtistsProps> = () => {
+const SelectArtists: React.FC<SelectArtistsProps> = ({ moveStep }) => {
   const [selectedMedia, setSelectedMedia] = useState<SelectedMedia>({});
 
   useEffect(() => {
