@@ -1,16 +1,16 @@
-import Grid from "@mui/material/Grid";
+import Grid2 from "@mui/material/Unstable_Grid2";
+import { useEffect, useState } from "react";
+import { withAuth } from "./RequireAuth";
+import { SearchContainer } from "./Search/SearchContainer";
 import {
   SelectedMedia,
   SelectedMediaContainer,
   SpotifyMedia,
 } from "./SelectedMedia/SelectedMediaContainer";
-import { useEffect, useState } from "react";
-import { SearchContainer } from "./Search/SearchContainer";
-import Grid2 from "@mui/material/Unstable_Grid2";
 
 interface PlaylistGeneratorProps {}
 
-export const PlaylistGenerator: React.FC<PlaylistGeneratorProps> = () => {
+const PlaylistGenerator: React.FC<PlaylistGeneratorProps> = () => {
   const [selectedMedia, setSelectedMedia] = useState<SelectedMedia>({});
 
   useEffect(() => {
@@ -38,3 +38,5 @@ export const PlaylistGenerator: React.FC<PlaylistGeneratorProps> = () => {
     </Grid2>
   );
 };
+
+export default withAuth(PlaylistGenerator);

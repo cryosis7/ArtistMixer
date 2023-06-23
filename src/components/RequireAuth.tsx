@@ -10,3 +10,19 @@ export const RequireAuth: React.FC<RequireAuthProps> = ({ children }) => {
 
   return token ? children : <Navigate to="/login" />;
 };
+
+export const withAuth = <P extends object>(
+  UnauthorisedComponent: React.ComponentType<P>
+) => {
+  const WithAuth: React.FC<P> = (props) => {
+    const token = localStorage.getItem("token");
+
+    return token ? (
+      <UnauthorisedComponent {...props} />
+    ) : (
+      <Navigate to="/login" />
+    );
+  };
+
+  return WithAuth;
+};

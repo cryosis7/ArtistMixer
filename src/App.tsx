@@ -3,8 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { HomePage } from "./components/HomePage";
 import { Login } from "./components/Login";
 import { NavBar } from "./components/NavBar";
-import { PlaylistGenerator } from "./components/PlaylistGenerator";
-import { RequireAuth } from "./components/RequireAuth";
+import PlaylistGenerator from "./components/PlaylistGenerator";
 
 const App: React.FC = () => {
   const [code, setCode] = useState<string>("");
@@ -29,14 +28,7 @@ const App: React.FC = () => {
           path="/login"
           element={<Login code={code} token={token} setToken={setToken} />}
         />
-        <Route
-          path="/search"
-          element={
-            <RequireAuth>
-              <PlaylistGenerator />
-            </RequireAuth>
-          }
-        />
+        <Route path="/search" element={<PlaylistGenerator />} />
       </Routes>
     </BrowserRouter>
   );
