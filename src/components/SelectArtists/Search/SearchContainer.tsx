@@ -1,7 +1,7 @@
-import CircularProgress from "@mui/material/CircularProgress";
 import { useState } from "react";
-import { SpotifyMedia } from "../SelectArtists/SelectArtists";
-import { SpotifyMediaList } from "../SelectArtists/SpotifyMediaList/SpotifyMediaList";
+import { SpotifyMedia } from "../SelectArtists";
+import { SpotifyMediaList } from "../SpotifyMediaList/SpotifyMediaList";
+import { LoadingSpinner } from "./LoadingSpinner";
 import { SearchForm } from "./SearchForm";
 
 interface SearchContainerProps {
@@ -22,8 +22,8 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
         setSearchResults={setSearchResults}
         setIsSearching={setIsSearching}
       />
-      {isSearching && <CircularProgress size={"10rem"} />}
-      {!isSearching && searchResults && (
+      {isSearching && <LoadingSpinner />}
+      {!isSearching && searchResults.artists && (
         <SpotifyMediaList media={searchResults} addItem={addSelectedMedia} />
       )}
     </>

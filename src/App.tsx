@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "./components/Login";
 import SelectArtists from "./components/SelectArtists/SelectArtists";
 import { NavigationBar, steps } from "./components/Navigation/NavigationBar";
+import { DraftPlaylist } from "./components/RefinePlaylist/DraftPlaylist";
+import { TempGeneratePlaylist } from "./components/GeneratePlaylist/TempGeneratePlaylist";
 
 const App: React.FC = () => {
   const [code, setCode] = useState<string>("");
@@ -26,12 +28,22 @@ const App: React.FC = () => {
     }
   };
 
+  const getContent = () => {
+    if (steps[activeStep] === "SELECT ARTISTS") {
+      return <SelectArtists moveStep={moveStep} />;
+      // } else if (steps[activeStep] === 'REFINE PLAYLIST') {
+      //   return <DraftPlaylist />
+      // } else if (steps[activeStep] === 'GENERATE') {
+      //   return <TempGeneratePlaylist />
+    }
+  };
+
   return (
     <BrowserRouter>
-      <NavigationBar activeStep={activeStep} />
+      <NavigationBar activeStep={activeStep} setActiveStep={setActiveStep} />
 
       <Routes>
-        <Route path="/" element={<SelectArtists moveStep={moveStep} />} />
+        <Route path="/" element={getContent()} />
         <Route
           path="/login"
           element={<Login code={code} token={token} setToken={setToken} />}

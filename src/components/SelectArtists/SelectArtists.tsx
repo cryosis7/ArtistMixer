@@ -1,7 +1,7 @@
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { useEffect, useState } from "react";
 import { withAuth } from "../RequireAuth";
-import { SearchContainer } from "../Search/SearchContainer";
+import { SearchContainer } from "./Search/SearchContainer";
 import { SelectedMediaContainer } from "./SelectedMedia/SelectedMediaContainer";
 
 export type SpotifyMedia =
@@ -42,8 +42,8 @@ const SelectArtists: React.FC<SelectArtistsProps> = ({ moveStep }) => {
   };
 
   return (
-    <Grid2 container spacing={2}>
-      <Grid2 xs={6} md={4}>
+    <Grid2 container spacing={4} padding={{ xs: 2, sm: 4, md: 6 }}>
+      <Grid2 xs={6} md={5} lg={4}>
         <SelectedMediaContainer selectedMedia={selectedMedia} />
       </Grid2>
       <Grid2 xs>

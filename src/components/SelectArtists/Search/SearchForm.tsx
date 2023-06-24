@@ -3,6 +3,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
+import Grid2 from "@mui/material/Unstable_Grid2";
 import { useState } from "react";
 import { redirect } from "react-router-dom";
 
@@ -71,31 +72,28 @@ export const SearchForm: React.FC<SearchProps> = ({
       onSubmit={handleSubmit}
       onKeyDown={(e) => e.key === "Enter" && handleSubmit(e)}
     >
-      <div>
-        <TextField
-          label="Search Term"
-          variant="outlined"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <InputLabel id="content-type-label">Content Type</InputLabel>
-        <Select
-          labelId="content-type-label"
-          id="content-type"
-          value={contentType}
-          onChange={(e) => setContentType(e.target.value as ContentTypes)}
-        >
-          {contentTypes.map((type) => (
-            <MenuItem key={type} value={type} selected={type === contentType}>
-              {type.split("")[0].toUpperCase() + type.slice(1)}
-            </MenuItem>
-          ))}
-        </Select>
-      </div>
-
-      <Button variant="contained" onClick={handleSearch}>
-        Search
-      </Button>
+      <Grid2
+        container
+        spacing={2}
+        alignItems={"center"}
+        justifyContent={"center"}
+      >
+        <Grid2 sm={8} md={6} lg={4}>
+          <TextField
+            label="Artist Name"
+            variant="outlined"
+            value={searchTerm}
+            size="small"
+            fullWidth
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </Grid2>
+        <Grid2>
+          <Button variant="contained" onClick={handleSearch}>
+            Search
+          </Button>
+        </Grid2>
+      </Grid2>
     </form>
   );
 };
