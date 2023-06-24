@@ -30,7 +30,7 @@ export const SelectedMediaList: React.FC<SelectedMediaListProps> = ({
         return (
           <ListItemButton
             selected={isSelected}
-            onClick={() => setSelectedItem(id)}
+            onClick={() => setSelectedItem(id === selectedItem ? "" : id)}
             divider
           >
             <ListItem
