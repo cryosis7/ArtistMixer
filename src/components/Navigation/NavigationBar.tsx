@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
 import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
-import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
 
 type StepType = "SELECT ARTISTS" | "REFINE PLAYLIST" | "GENERATE";
@@ -22,7 +22,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
 }) => {
   return (
     <>
-      <Stepper alternativeLabel activeStep={activeStep} nonLinear>
+      <Stepper alternativeLabel activeStep={activeStep} nonLinear sx={{ p: 4 }}>
         {steps.map((step, index) => (
           <Step key={step}>
             <StepButton onClick={() => setActiveStep(index)}>{step}</StepButton>

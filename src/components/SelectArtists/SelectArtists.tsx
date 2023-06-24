@@ -12,6 +12,7 @@ export type SpotifyMedia =
 export interface MediaItem {
   [id: string]: {
     name: string;
+    img?: string;
   };
 }
 export interface SelectedMedia {
@@ -41,10 +42,28 @@ const SelectArtists: React.FC<SelectArtistsProps> = ({ moveStep }) => {
     });
   };
 
+  const removeArtist = (artist: string) => {
+    if (!selectedMedia.artist) {
+      return;
+    }
+
+    delete selectedMedia.artist[artist];
+
+    setSelectedMedia({
+      ...selectedMedia,
+      artist: {
+        ...selectedMedia.artist,
+      },
+    });
+  };
+
   return (
     <Grid2 container spacing={4} padding={{ xs: 2, sm: 4, md: 6 }}>
       <Grid2 xs={6} md={5} lg={4}>
-        <SelectedMediaContainer selectedMedia={selectedMedia} />
+        <SelectedMediaContainer
+          selectedMedia={selectedMedia}
+          removeArtist={removeArtist}
+        />
       </Grid2>
       <Grid2 xs>
         <SearchContainer addSelectedMedia={addSelectedMedia} />

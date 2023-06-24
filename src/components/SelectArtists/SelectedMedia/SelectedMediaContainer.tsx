@@ -1,22 +1,21 @@
-import { SelectedMediaList } from "./SelectedMediaList";
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
 import React from "react";
 import { SelectedMedia } from "../SelectArtists";
-import { TempGeneratePlaylist } from "../../GeneratePlaylist/TempGeneratePlaylist";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
+import { SelectedMediaList } from "./SelectedMediaList";
 
 interface SelectedMediaContainerProps {
   selectedMedia: SelectedMedia;
+  removeArtist: (artistId: string) => void;
 }
 
 export const SelectedMediaContainer: React.FC<SelectedMediaContainerProps> = ({
   selectedMedia,
+  removeArtist,
 }) => {
   return (
     <>
-      <Typography variant="h2" sx={{ p: 2 }}>
+      <Typography variant="h2" gutterBottom>
         Artist Pool
       </Typography>
       <Typography gutterBottom>
@@ -27,7 +26,10 @@ export const SelectedMediaContainer: React.FC<SelectedMediaContainerProps> = ({
       <Divider sx={{ my: 4, mx: 8 }} />
 
       {selectedMedia.artist ? (
-        <SelectedMediaList selectedMedia={selectedMedia} />
+        <SelectedMediaList
+          selectedMedia={selectedMedia}
+          removeArtist={removeArtist}
+        />
       ) : (
         <Typography align="center" color="text.secondary">
           <i>
