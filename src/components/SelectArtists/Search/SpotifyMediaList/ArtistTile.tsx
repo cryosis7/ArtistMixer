@@ -47,6 +47,8 @@ export const ArtistTile: React.FC<ArtistTileProps> = ({
       onClick={() => addArtist(artist)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      fullWidth
+      sx={{ height: "100%" }}
     >
       <ImageListItem sx={{ width: "100%", height: "100%" }}>
         {image}

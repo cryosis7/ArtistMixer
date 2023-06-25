@@ -3,6 +3,7 @@ import { ArtistTile } from "./ArtistTile";
 import { List, useMediaQuery, useTheme } from "@mui/material";
 import { TrackItem } from "./TrackItem";
 import { SpotifyMedia } from "../../SelectArtists";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 interface MediaListProps {
   media: SpotifyApi.SearchResponse;
@@ -13,17 +14,19 @@ export const SpotifyMediaList: React.FC<MediaListProps> = ({
   media,
   addItem,
 }) => {
-  const theme = useTheme();
-  const usingSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const cols = usingSmallScreen ? 1 : 4;
+  // const theme = useTheme();
+  // const usingSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  // const cols = usingSmallScreen ? 1 : 4;
 
   if (media.artists) {
     return (
-      <ImageList cols={cols}>
+      <Grid2 container spacing={0.5} columns={{ xs: 1, sm: 3, lg: 4 }}>
         {media.artists.items.map((artist) => (
-          <ArtistTile artist={artist} addArtist={addItem} key={artist.id} />
+          <Grid2 key={artist.id} xs={1}>
+            <ArtistTile artist={artist} addArtist={addItem} />
+          </Grid2>
         ))}
-      </ImageList>
+      </Grid2>
     );
   }
 
