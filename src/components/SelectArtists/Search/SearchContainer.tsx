@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SpotifyMedia } from "../SelectArtists";
-import { SpotifyMediaList } from "../SpotifyMediaList/SpotifyMediaList";
+import { SpotifyMediaList } from "./SpotifyMediaList/SpotifyMediaList";
 import { LoadingSpinner } from "./LoadingSpinner";
 import { SearchForm } from "./SearchForm";
 

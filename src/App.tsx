@@ -1,10 +1,9 @@
+import "./App.css";
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "./components/Login";
-import SelectArtists from "./components/SelectArtists/SelectArtists";
 import { NavigationBar, steps } from "./components/Navigation/NavigationBar";
-import { DraftPlaylist } from "./components/RefinePlaylist/DraftPlaylist";
-import { TempGeneratePlaylist } from "./components/GeneratePlaylist/TempGeneratePlaylist";
+import SelectArtists from "./components/SelectArtists/SelectArtists";
 
 const App: React.FC = () => {
   const [code, setCode] = useState<string>("");

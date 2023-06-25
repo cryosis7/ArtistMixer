@@ -1,8 +1,8 @@
 import ImageList from "@mui/material/ImageList";
 import { ArtistTile } from "./ArtistTile";
-import { List } from "@mui/material";
+import { List, useMediaQuery, useTheme } from "@mui/material";
 import { TrackItem } from "./TrackItem";
-import { SpotifyMedia } from "../SelectArtists";
+import { SpotifyMedia } from "../../SelectArtists";
 
 interface MediaListProps {
   media: SpotifyApi.SearchResponse;
@@ -13,9 +13,13 @@ export const SpotifyMediaList: React.FC<MediaListProps> = ({
   media,
   addItem,
 }) => {
+  const theme = useTheme();
+  const usingSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const cols = usingSmallScreen ? 1 : 4;
+
   if (media.artists) {
     return (
-      <ImageList cols={4}>
+      <ImageList cols={cols}>
         {media.artists.items.map((artist) => (
           <ArtistTile artist={artist} addArtist={addItem} key={artist.id} />
         ))}
