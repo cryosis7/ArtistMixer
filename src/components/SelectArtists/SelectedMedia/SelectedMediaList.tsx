@@ -22,6 +22,11 @@ export const SelectedMediaList: React.FC<SelectedMediaListProps> = ({
     return <></>;
   }
 
+  const handleRemove = (id: string) => {
+    removeArtist(id);
+    setSelectedItem("");
+  };
+
   return (
     <List>
       {Object.entries(selectedMedia.artist ?? []).map(([id, artist]) => {
@@ -32,15 +37,18 @@ export const SelectedMediaList: React.FC<SelectedMediaListProps> = ({
             selected={isSelected}
             onClick={() => setSelectedItem(id === selectedItem ? "" : id)}
             divider
+            key={id}
           >
             <ListItem
-              key={id}
               secondaryAction={
                 <IconButton
                   edge="end"
                   aria-label="remove"
                   size="small"
-                  onClick={() => removeArtist(id)}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    handleRemove(id);
+                  }}
                 >
                   <RemoveCircleOutlineOutlinedIcon
                     color={isSelected ? "error" : "action"}

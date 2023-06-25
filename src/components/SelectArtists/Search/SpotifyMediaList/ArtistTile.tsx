@@ -4,16 +4,19 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
+import { SxProps } from "@mui/material/styles";
 import { useState } from "react";
 
 interface ArtistTileProps {
   artist: SpotifyApi.ArtistObjectFull;
   addArtist: (artist: SpotifyApi.ArtistObjectFull) => void;
+  selected: boolean;
 }
 
 export const ArtistTile: React.FC<ArtistTileProps> = ({
   artist,
   addArtist,
+  selected,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -42,13 +45,24 @@ export const ArtistTile: React.FC<ArtistTileProps> = ({
     setIsHovered(false);
   };
 
+  const selectedStyling: SxProps = selected
+    ? {
+        border: "2px solid",
+        borderColor: "primary.light",
+        padding: 2,
+      }
+    : {};
+
   return (
     <Button
       onClick={() => addArtist(artist)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       fullWidth
-      sx={{ height: "100%" }}
+      sx={{
+        height: "100%",
+        ...selectedStyling,
+      }}
     >
       <ImageListItem sx={{ width: "100%", height: "100%" }}>
         {image}

@@ -66,7 +66,10 @@ const SelectArtists: React.FC<SelectArtistsProps> = ({ moveStep }) => {
         />
       </Grid2>
       <Grid2 xs>
-        <SearchContainer addSelectedMedia={addSelectedMedia} />
+        <SearchContainer
+          addSelectedMedia={addSelectedMedia}
+          selectedMedia={selectedMedia}
+        />
       </Grid2>
     </Grid2>
   );
