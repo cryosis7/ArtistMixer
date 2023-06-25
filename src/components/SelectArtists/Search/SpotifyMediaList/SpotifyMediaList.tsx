@@ -1,19 +1,17 @@
-import { List } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { SelectedMedia, SpotifyMedia } from "../../SelectArtists";
-import { ArtistTile } from "./ArtistTile";
-import { TrackItem } from "./TrackItem";
 import { useMemo } from "react";
+import { SelectedMedia } from "../../SelectArtists";
+import { ArtistTile } from "./ArtistTile";
 
 interface MediaListProps {
   media: SpotifyApi.SearchResponse;
-  addItem: (item: SpotifyMedia) => void;
+  toggleArtist: (item: SpotifyApi.ArtistObjectFull) => void;
   selectedMedia: SelectedMedia;
 }
 
 export const SpotifyMediaList: React.FC<MediaListProps> = ({
   media,
-  addItem,
+  toggleArtist,
   selectedMedia,
 }) => {
   const artistIds = useMemo(
@@ -28,7 +26,7 @@ export const SpotifyMediaList: React.FC<MediaListProps> = ({
           <Grid2 key={artist.id} xs={1}>
             <ArtistTile
               artist={artist}
-              addArtist={addItem}
+              toggleArtist={toggleArtist}
               selected={artistIds.includes(artist.id)}
             />
           </Grid2>
@@ -36,20 +34,9 @@ export const SpotifyMediaList: React.FC<MediaListProps> = ({
       </Grid2>
     );
   }
-
-  if (media.tracks) {
-    return (
-      <List>
-        {media.tracks.items.map((track) => (
-          <TrackItem track={track} key={track.id} addTrack={addItem} />
-        ))}
-      </List>
-    );
-  }
-
   return (
-    <div>
-      <pre>{JSON.stringify(media, null, 2)}</pre>
-    </div>
+    <>
+      <p>media.artists is undefined</p>
+    </>
   );
 };

@@ -1,4 +1,5 @@
 import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import PersonIcon from "@mui/icons-material/Person";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -9,13 +10,13 @@ import { useState } from "react";
 
 interface ArtistTileProps {
   artist: SpotifyApi.ArtistObjectFull;
-  addArtist: (artist: SpotifyApi.ArtistObjectFull) => void;
+  toggleArtist: (artist: SpotifyApi.ArtistObjectFull) => void;
   selected: boolean;
 }
 
 export const ArtistTile: React.FC<ArtistTileProps> = ({
   artist,
-  addArtist,
+  toggleArtist,
   selected,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -55,7 +56,7 @@ export const ArtistTile: React.FC<ArtistTileProps> = ({
 
   return (
     <Button
-      onClick={() => addArtist(artist)}
+      onClick={() => toggleArtist(artist)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       fullWidth
@@ -76,7 +77,11 @@ export const ArtistTile: React.FC<ArtistTileProps> = ({
             className={`centerContent`}
             sx={hasImages ? { backgroundColor: "action.active" } : {}}
           >
-            <AddIcon fontSize="large" color="inherit" />
+            {selected ? (
+              <RemoveIcon fontSize="large" />
+            ) : (
+              <AddIcon fontSize="large" />
+            )}
           </Box>
         )}
       </ImageListItem>

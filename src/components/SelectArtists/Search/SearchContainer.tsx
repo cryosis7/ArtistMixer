@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { SelectedMedia, SpotifyMedia } from "../SelectArtists";
-import { SpotifyMediaList } from "./SpotifyMediaList/SpotifyMediaList";
+import { SelectedMedia } from "../SelectArtists";
 import { LoadingSpinner } from "./LoadingSpinner";
 import { SearchForm } from "./SearchForm";
+import { SpotifyMediaList } from "./SpotifyMediaList/SpotifyMediaList";
 
 interface SearchContainerProps {
-  addSelectedMedia: (media: SpotifyMedia) => void;
+  toggleArtist: (media: SpotifyApi.ArtistObjectFull) => void;
   selectedMedia: SelectedMedia;
 }
 
 export const SearchContainer: React.FC<SearchContainerProps> = ({
-  addSelectedMedia,
+  toggleArtist,
   selectedMedia,
 }) => {
   const [searchResults, setSearchResults] = useState<SpotifyApi.SearchResponse>(
@@ -28,7 +28,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
       {!isSearching && searchResults.artists && (
         <SpotifyMediaList
           media={searchResults}
-          addItem={addSelectedMedia}
+          toggleArtist={toggleArtist}
           selectedMedia={selectedMedia}
         />
       )}

@@ -42,6 +42,14 @@ const SelectArtists: React.FC<SelectArtistsProps> = ({ moveStep }) => {
     });
   };
 
+  const toggleArtist = (artist: SpotifyApi.ArtistObjectFull) => {
+    if (selectedMedia.artist?.[artist.id]) {
+      removeArtist(artist.id);
+    } else {
+      addSelectedMedia(artist);
+    }
+  };
+
   const removeArtist = (artist: string) => {
     if (!selectedMedia.artist) {
       return;
@@ -67,7 +75,7 @@ const SelectArtists: React.FC<SelectArtistsProps> = ({ moveStep }) => {
       </Grid2>
       <Grid2 xs>
         <SearchContainer
-          addSelectedMedia={addSelectedMedia}
+          toggleArtist={toggleArtist}
           selectedMedia={selectedMedia}
         />
       </Grid2>
