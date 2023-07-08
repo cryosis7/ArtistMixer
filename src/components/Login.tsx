@@ -2,8 +2,6 @@ import { Navigate } from "react-router-dom";
 import SpotifyAuth from "./SpotifyAuth";
 import { useEffect } from "react";
 
-// const IP_ADDRESS = "http://192.168.1.8:3000/login";
-
 interface LoginProps {
   code: string;
   token: string;
@@ -30,7 +28,7 @@ export const Login: React.FC<LoginProps> = ({ code, token, setToken }) => {
   ) : (
     <SpotifyAuth
       clientId={process.env.REACT_APP_SPOTIFY_CLIENT_ID ?? ""}
-      redirectUri={`${window.location.origin}/login`}
+      redirectUri={`${window.location.origin}/ArtistMixer/login`}
       scopes={[
         "user-read-email",
         "user-read-private",

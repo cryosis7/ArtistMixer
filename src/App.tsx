@@ -57,7 +57,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/ArtistMixer">
       <NavigationBar activeStep={activeStep} setActiveStep={setActiveStep} />
 
       <Routes>
