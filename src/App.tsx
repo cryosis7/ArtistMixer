@@ -3,12 +3,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Login } from "./components/Login";
 import { NavigationBar, steps } from "./components/Navigation/NavigationBar";
-import { RefinePlaylist } from "./components/RefinePlaylist/RefinePlaylist";
 import SelectArtists from "./components/SelectArtists/SelectArtists";
 import {
   Playlist,
   PlaylistContract,
 } from "./models/datacontracts/PlaylistContract";
+import RefinePlaylist from "./components/RefinePlaylist/RefinePlaylist";
 
 const App: React.FC = () => {
   const [code, setCode] = useState<string>("");
@@ -21,7 +21,6 @@ const App: React.FC = () => {
     const code = params.get("code");
     if (code) {
       setCode(code);
-      console.log("Code: ", code);
     }
   }, []);
 

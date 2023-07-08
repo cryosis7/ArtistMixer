@@ -1,7 +1,4 @@
 import Button from "@mui/material/Button";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { useState } from "react";
@@ -15,14 +12,13 @@ interface SearchProps {
 }
 
 type ContentTypes = "artist" | "album" | "track";
-const contentTypes: ContentTypes[] = ["artist", "album", "track"];
+const contentType: ContentTypes = "artist";
 
 export const SearchForm: React.FC<SearchProps> = ({
   setSearchResults,
   setIsSearching,
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [contentType, setContentType] = useState<ContentTypes>("artist");
   const token = localStorage.getItem("token") ?? "";
 
   if (!token) {

@@ -7,20 +7,29 @@ import React, { useState } from "react";
 import { PlaylistContract } from "../../models/datacontracts/PlaylistContract";
 import { steps } from "../Navigation/NavigationBar";
 import { DraftPlaylist } from "./DraftPlaylist";
+import { createSpotifyPlaylist } from "../../scripts/CreateSpotifyPlaylist";
+import { withAuth } from "../RequireAuth";
+import { Navigate } from "react-router-dom";
 
 interface RefinePlaylistProps {
   playlist: PlaylistContract;
   setPlaylist: React.Dispatch<PlaylistContract>;
   setActiveStep: React.Dispatch<number>;
+  token?: string;
 }
 
-export const RefinePlaylist: React.FC<RefinePlaylistProps> = ({
+const RefinePlaylist: React.FC<RefinePlaylistProps> = ({
   playlist,
   setPlaylist,
   setActiveStep,
+  token,
 }) => {
   const [playlistName, setPlaylistName] = useState<string>("");
   const [hasError, setHasError] = useState<boolean>(false);
+
+  if (token == null) {
+    return <Navigate to="/login" />;
+  }
 
   const handleSubmit = () => {
     if (playlistName === "") {
@@ -28,7 +37,7 @@ export const RefinePlaylist: React.FC<RefinePlaylistProps> = ({
       return;
     }
 
-    // createSpotifyPlaylist()
+    createSpotifyPlaylist(playlistName, playlist, token);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,3 +116,5 @@ export const RefinePlaylist: React.FC<RefinePlaylistProps> = ({
     </Grid2>
   );
 };
+
+export default withAuth(RefinePlaylist);

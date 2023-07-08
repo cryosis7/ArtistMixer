@@ -8,7 +8,7 @@ export class Playlist implements PlaylistContract {
   songs: Song[];
 
   constructor() {
-    this.version = "0.1";
+    this.version = "0.2";
     this.songs = [];
   }
 }
@@ -19,6 +19,7 @@ export interface Song {
   externalUrl: string;
   previewUrl: string;
   artists: Artist[];
+  uri: string;
 }
 
 export interface Artist {
