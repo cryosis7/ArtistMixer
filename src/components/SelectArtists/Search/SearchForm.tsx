@@ -47,7 +47,7 @@ export const SearchForm: React.FC<SearchProps> = ({
       .catch((err) => {
         // If unauthorized, redirect to login
         if (err.status === 401) {
-          redirect("/login");
+          redirect("/ArtistMixer/login");
         } else {
           console.error(err);
         }

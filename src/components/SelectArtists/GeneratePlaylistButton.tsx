@@ -70,7 +70,7 @@ export const GeneratePlaylistButton: React.FC<GeneratePlaylistButtonProps> = ({
       .catch((err) => {
         // If unauthorized, redirect to login
         if (err.status === 401) {
-          redirect("/login");
+          redirect("/ArtistMixer/login");
         } else {
           console.error(err);
         }

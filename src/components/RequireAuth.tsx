@@ -13,7 +13,7 @@ interface RequireAuthProps {
 export const RequireAuth: React.FC<RequireAuthProps> = ({ children }) => {
   const token = localStorage.getItem("token");
 
-  return token ? children : <Navigate to="/login" />;
+  return token ? children : <Navigate to="/ArtistMixer/login" />;
 };
 
 export const withAuth = <P extends object>(
@@ -25,7 +25,7 @@ export const withAuth = <P extends object>(
     return token ? (
       <UnauthorisedComponent {...props} token={token} />
     ) : (
-      <Navigate to="/login" />
+      <Navigate to="/ArtistMixer/login" />
     );
   };
 

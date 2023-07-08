@@ -40,7 +40,7 @@ const SelectArtists: React.FC<SelectArtistsProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   if (token == null) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/ArtistMixer/login" />;
   }
 
   const addSelectedMedia = (media: SpotifyMedia) => {

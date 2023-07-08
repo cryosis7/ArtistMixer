@@ -28,7 +28,7 @@ const RefinePlaylist: React.FC<RefinePlaylistProps> = ({
   const [hasError, setHasError] = useState<boolean>(false);
 
   if (token == null) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/ArtistMixer/login" />;
   }
 
   const handleSubmit = () => {
