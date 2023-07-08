@@ -1,5 +1,3 @@
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
 import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
 import Stepper from "@mui/material/Stepper";
@@ -21,17 +19,12 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   setActiveStep,
 }) => {
   return (
-    <>
-      <Stepper alternativeLabel activeStep={activeStep} nonLinear sx={{ p: 4 }}>
-        {steps.map((step, index) => (
-          <Step key={step}>
-            <StepButton onClick={() => setActiveStep(index)}>{step}</StepButton>
-          </Step>
-        ))}
-      </Stepper>
-      <Button variant="contained">
-        {activeStep === steps.length - 1 ? "Generate" : "Next"}
-      </Button>
-    </>
+    <Stepper alternativeLabel activeStep={activeStep} nonLinear sx={{ p: 4 }}>
+      {steps.map((step, index) => (
+        <Step key={step}>
+          <StepButton onClick={() => setActiveStep(index)}>{step}</StepButton>
+        </Step>
+      ))}
+    </Stepper>
   );
 };

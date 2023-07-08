@@ -17,13 +17,13 @@ export const RequireAuth: React.FC<RequireAuthProps> = ({ children }) => {
 };
 
 export const withAuth = <P extends object>(
-  UnauthorisedComponent: React.ComponentType<P>
+  UnauthorisedComponent: React.ComponentType<P & { token?: string }>
 ) => {
   const WithAuth: React.FC<P> = (props) => {
     const token = localStorage.getItem("token");
 
     return token ? (
-      <UnauthorisedComponent {...props} />
+      <UnauthorisedComponent {...props} token={token} />
     ) : (
       <Navigate to="/login" />
     );

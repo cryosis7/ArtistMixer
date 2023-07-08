@@ -31,7 +31,7 @@ export const SelectedMediaContainer: React.FC<SelectedMediaContainerProps> = ({
           removeArtist={removeArtist}
         />
       ) : (
-        <Typography align="center" color="text.secondary">
+        <Typography align="left" color="text.secondary">
           <i>
             It's lonely here.
             <br />

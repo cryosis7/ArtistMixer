@@ -72,12 +72,7 @@ export const SearchForm: React.FC<SearchProps> = ({
       onSubmit={handleSubmit}
       onKeyDown={(e) => e.key === "Enter" && handleSubmit(e)}
     >
-      <Grid2
-        container
-        spacing={2}
-        alignItems={"center"}
-        justifyContent={"center"}
-      >
+      <Grid2 container spacing={2} alignItems="center" justifyContent="end">
         <Grid2 sm={8} md={6} lg={4}>
           <TextField
             label="Artist Name"
