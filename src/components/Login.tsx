@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import SpotifyAuth from "./SpotifyAuth";
 import { useEffect } from "react";
 
-const IP_ADDRESS = "http://192.168.1.8:3000/login";
+// const IP_ADDRESS = "http://192.168.1.8:3000/login";
 
 interface LoginProps {
   code: string;
@@ -30,7 +30,7 @@ export const Login: React.FC<LoginProps> = ({ code, token, setToken }) => {
   ) : (
     <SpotifyAuth
       clientId={process.env.REACT_APP_SPOTIFY_CLIENT_ID ?? ""}
-      redirectUri={IP_ADDRESS}
+      redirectUri={`${window.location.origin}/login`}
       scopes={[
         "user-read-email",
         "user-read-private",

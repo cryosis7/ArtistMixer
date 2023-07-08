@@ -48,7 +48,7 @@ export const GeneratePlaylistButton: React.FC<GeneratePlaylistButtonProps> = ({
             // Mapping the Artist array inside each Song
             if (song.artists) {
               song.artists = song.artists.map((artistData: any) =>
-                Object.assign({}, artistData)
+                Object.assign({}, artistData),
               );
             }
 

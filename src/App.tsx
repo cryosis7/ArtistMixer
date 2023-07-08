@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Login } from "./components/Login";
 import { NavigationBar, steps } from "./components/Navigation/NavigationBar";
@@ -66,6 +66,7 @@ const App: React.FC = () => {
           path="/login"
           element={<Login code={code} token={token} setToken={setToken} />}
         />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

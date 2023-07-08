@@ -14,7 +14,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
   selectedMedia,
 }) => {
   const [searchResults, setSearchResults] = useState<SpotifyApi.SearchResponse>(
-    {}
+    {},
   );
   const [isSearching, setIsSearching] = useState<boolean>(false);
 

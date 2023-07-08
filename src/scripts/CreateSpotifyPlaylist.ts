@@ -3,7 +3,7 @@ import { PlaylistContract } from "../models/datacontracts/PlaylistContract";
 export const createSpotifyPlaylist = async (
   name: string,
   playlist: PlaylistContract,
-  token: string
+  token: string,
 ) => {
   const url =
     "https://jrfg22ir6f.execute-api.ap-southeast-2.amazonaws.com/api/AddRandomPlaylist";

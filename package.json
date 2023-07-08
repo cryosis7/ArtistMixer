@@ -1,5 +1,6 @@
 {
   "name": "playlistgeneratorfrontend",
+  "homepage": "https://cryosis7.github.io/ArtistMixer",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -16,6 +17,7 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@types/spotify-api": "^0.0.21",
+    "gh-pages": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",
@@ -30,6 +32,8 @@
     "start": "react-scripts start",
     "prebuild": "yarn lint --fix && yarn format",
     "build": "react-scripts build",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -37,6 +41,9 @@
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "ignorePatterns": [
+      "build/"
     ]
   },
   "browserslist": {

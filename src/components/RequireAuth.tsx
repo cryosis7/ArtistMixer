@@ -17,7 +17,7 @@ export const RequireAuth: React.FC<RequireAuthProps> = ({ children }) => {
 };
 
 export const withAuth = <P extends object>(
-  UnauthorisedComponent: React.ComponentType<P & { token?: string }>
+  UnauthorisedComponent: React.ComponentType<P & { token?: string }>,
 ) => {
   const WithAuth: React.FC<P> = (props) => {
     const token = localStorage.getItem("token");

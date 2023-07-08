@@ -16,7 +16,7 @@ export const SpotifyMediaList: React.FC<MediaListProps> = ({
 }) => {
   const artistIds = useMemo(
     () => Object.keys(selectedMedia.artist ?? []),
-    [selectedMedia]
+    [selectedMedia],
   );
 
   if (media.artists) {
