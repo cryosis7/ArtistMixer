@@ -8,17 +8,15 @@ import { PlaylistContract } from "../../models/datacontracts/PlaylistContract";
 import { steps } from "../Navigation/NavigationBar";
 import { DraftPlaylist } from "./DraftPlaylist";
 import { createSpotifyPlaylist } from "../../scripts/CreateSpotifyPlaylist";
-import { withAuth } from "../RequireAuth";
-import { Navigate } from "react-router-dom";
 
 interface RefinePlaylistProps {
   playlist: PlaylistContract;
   setPlaylist: React.Dispatch<PlaylistContract>;
   setActiveStep: React.Dispatch<number>;
-  token?: string;
+  token: string;
 }
 
-const RefinePlaylist: React.FC<RefinePlaylistProps> = ({
+export const RefinePlaylist: React.FC<RefinePlaylistProps> = ({
   playlist,
   setPlaylist,
   setActiveStep,
@@ -27,8 +25,8 @@ const RefinePlaylist: React.FC<RefinePlaylistProps> = ({
   const [playlistName, setPlaylistName] = useState<string>("");
   const [hasError, setHasError] = useState<boolean>(false);
 
-  if (token == null) {
-    return <Navigate to="/ArtistMixer/login" />;
+  if (token == null || token === "") {
+    return <Typography>Error in RefinePlaylist.tsx: Token is empty</Typography>;
   }
 
   const handleSubmit = () => {
@@ -116,5 +114,3 @@ const RefinePlaylist: React.FC<RefinePlaylistProps> = ({
     </Grid2>
   );
 };
-
-export default withAuth(RefinePlaylist);

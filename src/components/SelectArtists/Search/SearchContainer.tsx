@@ -7,11 +7,13 @@ import { SpotifyMediaList } from "./SpotifyMediaList/SpotifyMediaList";
 interface SearchContainerProps {
   toggleArtist: (media: SpotifyApi.ArtistObjectFull) => void;
   selectedMedia: SelectedMedia;
+  token: string;
 }
 
 export const SearchContainer: React.FC<SearchContainerProps> = ({
   toggleArtist,
   selectedMedia,
+  token,
 }) => {
   const [searchResults, setSearchResults] = useState<SpotifyApi.SearchResponse>(
     {},
@@ -23,6 +25,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
       <SearchForm
         setSearchResults={setSearchResults}
         setIsSearching={setIsSearching}
+        token={token}
       />
       {isSearching && <LoadingSpinner />}
       {!isSearching && searchResults.artists && (

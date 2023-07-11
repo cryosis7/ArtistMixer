@@ -1,4 +1,3 @@
-import { redirect } from "react-router-dom";
 import {
   PlaylistContract,
   Song,
@@ -68,12 +67,7 @@ export const GeneratePlaylistButton: React.FC<GeneratePlaylistButtonProps> = ({
         setPlaylist(newPlaylist);
       })
       .catch((err) => {
-        // If unauthorized, redirect to login
-        if (err.status === 401) {
-          redirect("/ArtistMixer/login");
-        } else {
-          console.error(err);
-        }
+        console.error(err);
       })
       .finally(() => {
         setIsLoading(false);

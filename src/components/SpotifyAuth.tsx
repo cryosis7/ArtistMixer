@@ -4,28 +4,22 @@ import * as React from "react";
 
 interface SpotifyAuthProps {
   clientId: string;
-  redirectUri: string;
   scopes: string[];
 }
 
 /**
  * Authorizes the user with Spotify
  * @param {string} clientId
- * @param {string} redirectUri
  * @param {string[]} scopes
  * @returns {JSX.Element} The button to authorize the user or the request token component if the code is present
  */
-const SpotifyAuth: React.FC<SpotifyAuthProps> = ({
-  clientId,
-  redirectUri,
-  scopes,
-}) => {
+const SpotifyAuth: React.FC<SpotifyAuthProps> = ({ clientId, scopes }) => {
   const authorizeSpotify = () => {
     const queryParams = new URLSearchParams({
       response_type: "code",
       client_id: clientId,
       scope: scopes.join(" "),
-      redirect_uri: redirectUri,
+      redirect_uri: `${window.location.origin}/ArtistMixer/`,
     }).toString();
 
     window.location.href = `https://accounts.spotify.com/authorize?${queryParams}`;

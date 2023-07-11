@@ -2,13 +2,13 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { useState } from "react";
-import { redirect } from "react-router-dom";
 
 interface SearchProps {
   setSearchResults: React.Dispatch<
     React.SetStateAction<SpotifyApi.SearchResponse>
   >;
   setIsSearching: React.Dispatch<React.SetStateAction<boolean>>;
+  token: string
 }
 
 type ContentTypes = "artist" | "album" | "track";
@@ -17,11 +17,12 @@ const contentType: ContentTypes = "artist";
 export const SearchForm: React.FC<SearchProps> = ({
   setSearchResults,
   setIsSearching,
+    token
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const token = localStorage.getItem("token") ?? "";
+  // const token = localStorage.getItem("token") ?? "";
 
-  if (!token) {
+  if (token === '') {
     console.error("No token found - Auth test must be failing");
   }
 
@@ -45,12 +46,7 @@ export const SearchForm: React.FC<SearchProps> = ({
         setSearchResults(data);
       })
       .catch((err) => {
-        // If unauthorized, redirect to login
-        if (err.status === 401) {
-          redirect("/ArtistMixer/login");
-        } else {
-          console.error(err);
-        }
+        console.error(err);
       })
       .finally(() => {
         setIsSearching(false);

@@ -1,12 +1,11 @@
 import Grid2 from "@mui/material/Unstable_Grid2";
 import React, { useState } from "react";
 import { PlaylistContract } from "../../models/datacontracts/PlaylistContract";
-import { withAuth } from "../RequireAuth";
 import { GeneratePlaylistButton } from "./GeneratePlaylistButton";
 import { SearchContainer } from "./Search/SearchContainer";
 import { SelectedMediaContainer } from "./SelectedMedia/SelectedMediaContainer";
-import { Navigate } from "react-router-dom";
 import { LoadingSpinner } from "./Search/LoadingSpinner";
+import Typography from "@mui/material/Typography";
 
 export type SpotifyMedia =
   | SpotifyApi.TrackObjectFull
@@ -19,6 +18,7 @@ export interface MediaItem {
     img?: string;
   };
 }
+
 export interface SelectedMedia {
   artist?: MediaItem;
   track?: MediaItem;
@@ -28,10 +28,10 @@ export interface SelectedMedia {
 interface SelectArtistsProps {
   moveStep: (arg0: "FORWARD" | "BACKWARD") => void;
   setPlaylist: React.Dispatch<PlaylistContract>;
-  token?: string;
+  token: string;
 }
 
-const SelectArtists: React.FC<SelectArtistsProps> = ({
+export const SelectArtists: React.FC<SelectArtistsProps> = ({
   moveStep,
   setPlaylist,
   token,
@@ -40,7 +40,7 @@ const SelectArtists: React.FC<SelectArtistsProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   if (token == null) {
-    return <Navigate to="/ArtistMixer/login" />;
+    return <Typography>Error in SelectArtists.tsx: Token is empty</Typography>;
   }
 
   const addSelectedMedia = (media: SpotifyMedia) => {
@@ -104,6 +104,7 @@ const SelectArtists: React.FC<SelectArtistsProps> = ({
               <SearchContainer
                 toggleArtist={toggleArtist}
                 selectedMedia={selectedMedia}
+                token={token}
               />
             </Grid2>
           </>
@@ -112,5 +113,3 @@ const SelectArtists: React.FC<SelectArtistsProps> = ({
     </Grid2>
   );
 };
-
-export default withAuth(SelectArtists);

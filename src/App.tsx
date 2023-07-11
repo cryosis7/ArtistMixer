@@ -1,26 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { Login } from "./components/Login";
 import { NavigationBar, steps } from "./components/Navigation/NavigationBar";
-import SelectArtists from "./components/SelectArtists/SelectArtists";
 import {
   Playlist,
   PlaylistContract,
 } from "./models/datacontracts/PlaylistContract";
-import RefinePlaylist from "./components/RefinePlaylist/RefinePlaylist";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import { getCode, getToken } from "./scripts/SpotifyAuth";
+import { LoadingSpinner } from "./components/SelectArtists/Search/LoadingSpinner";
+import { SelectArtists } from "./components/SelectArtists/SelectArtists";
+import { RefinePlaylist } from "./components/RefinePlaylist/RefinePlaylist";
 
 const App: React.FC = () => {
-  const [code, setCode] = useState<string>("");
-  const [token, setToken] = useState<string>("");
   const [activeStep, setActiveStep] = useState<number>(0);
   const [playlist, setPlaylist] = useState<PlaylistContract>(new Playlist());
+  const [token, setToken] = useState<string>("");
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get("code");
-    if (code) {
-      setCode(code);
+    const searchParams = new URLSearchParams(window.location.search);
+    const code = searchParams.get("code") ?? "";
+
+    if (code !== "") {
+      setIsAuthenticating(true);
+      getToken(code)
+        .then((value) => {
+          setIsAuthenticated(true);
+          setToken(value);
+        })
+        .catch((reason) => {
+          console.error(reason);
+          setIsAuthenticated(false);
+        })
+        .finally(() => setIsAuthenticating(false));
+
+      const cleanedURL = window.location.href.split("?")[0];
+      window.history.replaceState({}, document.title, cleanedURL);
     }
   }, []);
 
@@ -42,33 +59,44 @@ const App: React.FC = () => {
 
   const getCurrentScreen = () => {
     if (steps[activeStep] === "SELECT ARTISTS") {
-      return <SelectArtists moveStep={moveStep} setPlaylist={setPlaylist} />;
+      return (
+        <SelectArtists
+          moveStep={moveStep}
+          setPlaylist={setPlaylist}
+          token={token}
+        />
+      );
     } else if (steps[activeStep] === "REFINE PLAYLIST") {
       return (
         <RefinePlaylist
           playlist={playlist}
           setPlaylist={setPlaylist}
           setActiveStep={setActiveStep}
+          token={token}
         />
       );
       // } else if (steps[activeStep] === 'GENERATE') {
       //   return <TempGeneratePlaylist />
     }
+    return <></>;
   };
 
   return (
-    <BrowserRouter basename="/ArtistMixer">
+    <>
       <NavigationBar activeStep={activeStep} setActiveStep={setActiveStep} />
 
-      <Routes>
-        <Route path="/" element={getCurrentScreen()} />
-        <Route
-          path="/login"
-          element={<Login code={code} token={token} setToken={setToken} />}
-        />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </BrowserRouter>
+      {isAuthenticated ? (
+        getCurrentScreen()
+      ) : isAuthenticating ? (
+        <LoadingSpinner />
+      ) : (
+        <Box textAlign="center" padding={6}>
+          <Button variant="contained" role="link" onClick={getCode}>
+            Authorize Spotify
+          </Button>
+        </Box>
+      )}
+    </>
   );
 };
 

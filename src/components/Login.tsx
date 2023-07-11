@@ -1,34 +1,42 @@
-import { Navigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { LoadingSpinner } from "./SelectArtists/Search/LoadingSpinner";
 import SpotifyAuth from "./SpotifyAuth";
-import { useEffect } from "react";
 
 interface LoginProps {
   code: string;
-  token: string;
-  setToken: React.Dispatch<React.SetStateAction<string>>;
+  hasRequestedToken: boolean;
 }
 
-export const Login: React.FC<LoginProps> = ({ code, token, setToken }) => {
+export const Login: React.FC<LoginProps> = ({ code }) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const hasRequestedToken = useRef<boolean>(false);
+
+  console.log("login code: ", code);
+
   useEffect(() => {
-    if (code !== "") {
+    if (!hasRequestedToken.current && code !== "") {
+      console.log("prop code: ", code);
+      hasRequestedToken.current = true;
+      setIsLoading(true);
+
       const url =
         "https://jrfg22ir6f.execute-api.ap-southeast-2.amazonaws.com/api/authenticate";
       fetch(`${url}?code=${code}`)
         .then((res) => res.json())
         .then((data) => {
-          setToken(data.token);
-          localStorage.setItem("token", data.token);
+          sessionStorage.setItem("token", data.token);
+          sessionStorage.removeItem("code");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(JSON.stringify(err)))
+        .finally(() => setIsLoading(false));
     }
-  }, [code, setToken]);
+  }, [code]);
 
-  return token ? (
-    <Navigate to={"/"} />
+  return isLoading ? (
+    <LoadingSpinner />
   ) : (
     <SpotifyAuth
       clientId={process.env.REACT_APP_SPOTIFY_CLIENT_ID ?? ""}
-      redirectUri={`${window.location.origin}/ArtistMixer/login`}
       scopes={[
         "user-read-email",
         "user-read-private",
