@@ -1,7 +1,7 @@
 import Grid2 from "@mui/material/Unstable_Grid2";
 import React, { useState } from "react";
 import { PlaylistContract } from "../../models/datacontracts/PlaylistContract";
-import { GeneratePlaylistButton } from "./GeneratePlaylistButton";
+import { GeneratePlaylistControl } from "./GeneratePlaylistControl";
 import { SearchContainer } from "./Search/SearchContainer";
 import { SelectedMediaContainer } from "./SelectedMedia/SelectedMediaContainer";
 import { LoadingSpinner } from "./Search/LoadingSpinner";
@@ -26,13 +26,11 @@ export interface SelectedMedia {
 }
 
 interface SelectArtistsProps {
-  moveStep: (arg0: "FORWARD" | "BACKWARD") => void;
   setPlaylist: React.Dispatch<PlaylistContract>;
   token: string;
 }
 
 export const SelectArtists: React.FC<SelectArtistsProps> = ({
-  moveStep,
   setPlaylist,
   token,
 }) => {
@@ -79,7 +77,7 @@ export const SelectArtists: React.FC<SelectArtistsProps> = ({
   return (
     <Grid2 container direction="column" padding={2}>
       <Grid2 textAlign="center">
-        <GeneratePlaylistButton
+        <GeneratePlaylistControl
           selectedArtists={selectedMedia}
           setPlaylist={setPlaylist}
           token={token}

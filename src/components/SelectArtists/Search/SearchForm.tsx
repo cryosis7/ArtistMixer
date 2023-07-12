@@ -8,7 +8,7 @@ interface SearchProps {
     React.SetStateAction<SpotifyApi.SearchResponse>
   >;
   setIsSearching: React.Dispatch<React.SetStateAction<boolean>>;
-  token: string
+  token: string;
 }
 
 type ContentTypes = "artist" | "album" | "track";
@@ -17,12 +17,12 @@ const contentType: ContentTypes = "artist";
 export const SearchForm: React.FC<SearchProps> = ({
   setSearchResults,
   setIsSearching,
-    token
+  token,
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   // const token = localStorage.getItem("token") ?? "";
 
-  if (token === '') {
+  if (token === "") {
     console.error("No token found - Auth test must be failing");
   }
 

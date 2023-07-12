@@ -19,6 +19,13 @@ const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
 
+  // useEffect(() => {
+  //   const oldToken = sessionStorage.getItem('token');
+  //   if (oldToken !== null) {
+
+  //   }
+  // }, []);
+
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get("code") ?? "";
@@ -29,6 +36,7 @@ const App: React.FC = () => {
         .then((value) => {
           setIsAuthenticated(true);
           setToken(value);
+          sessionStorage.setItem('token', value);
         })
         .catch((reason) => {
           console.error(reason);
@@ -49,23 +57,9 @@ const App: React.FC = () => {
     }
   }, [playlist]);
 
-  const moveStep = (direction: "FORWARD" | "BACKWARD") => {
-    if (activeStep < steps.length - 1 && direction === "FORWARD") {
-      setActiveStep(activeStep + 1);
-    } else if (activeStep > 0 && direction === "BACKWARD") {
-      setActiveStep(activeStep - 1);
-    }
-  };
-
   const getCurrentScreen = () => {
     if (steps[activeStep] === "SELECT ARTISTS") {
-      return (
-        <SelectArtists
-          moveStep={moveStep}
-          setPlaylist={setPlaylist}
-          token={token}
-        />
-      );
+      return <SelectArtists setPlaylist={setPlaylist} token={token} />;
     } else if (steps[activeStep] === "REFINE PLAYLIST") {
       return (
         <RefinePlaylist

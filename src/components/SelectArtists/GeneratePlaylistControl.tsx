@@ -1,11 +1,13 @@
+import Button from "@mui/material/Button";
+import Input from "@mui/material/Input";
+import { useState } from "react";
 import {
   PlaylistContract,
   Song,
 } from "../../models/datacontracts/PlaylistContract";
 import { SelectedMedia } from "./SelectArtists";
-import Button from "@mui/material/Button";
 
-interface GeneratePlaylistButtonProps {
+interface GeneratePlaylistControlProps {
   selectedArtists: SelectedMedia;
   setPlaylist: React.Dispatch<PlaylistContract>;
   token: string;
@@ -13,19 +15,17 @@ interface GeneratePlaylistButtonProps {
   setIsLoading: React.Dispatch<boolean>;
 }
 
-export const GeneratePlaylistButton: React.FC<GeneratePlaylistButtonProps> = ({
-  selectedArtists,
-  setPlaylist,
-  token,
-  isLoading,
-  setIsLoading,
-}) => {
+export const GeneratePlaylistControl: React.FC<
+  GeneratePlaylistControlProps
+> = ({ selectedArtists, setPlaylist, token, isLoading, setIsLoading }) => {
+  const [playlistSize, setPlaylistSize] = useState<number>(30);
+
   const url =
     "https://jrfg22ir6f.execute-api.ap-southeast-2.amazonaws.com/api/getrandomplaylist";
   const params = new URLSearchParams();
   params.set("token", token);
   params.set("artists", Object.keys(selectedArtists?.artist ?? "").join(","));
-  params.set("playlistSize", "30");
+  params.set("playlistSize", playlistSize.toString());
   const requestUrl = `${url}?${params.toString()}`;
 
   const generatePlaylist = async () => {
@@ -74,14 +74,34 @@ export const GeneratePlaylistButton: React.FC<GeneratePlaylistButtonProps> = ({
       });
   };
 
+  const handleChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    const value = event.target.value;
+    if (/^\d*$/.test(value)) {
+      setPlaylistSize(Number.parseInt(value));
+    }
+  };
+
   return (
-    <Button
-      variant="contained"
-      color="primary"
-      onClick={generatePlaylist}
-      disabled={isLoading()}
-    >
-      Generate Playlist
-    </Button>
+    <>
+      <Input
+        type="number"
+        value={playlistSize.toString()}
+        onChange={handleChange}
+        disabled={isLoading()}
+        placeholder="Playlist Size"
+        sx={{ marginX: 1 }}
+      />
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={generatePlaylist}
+        disabled={isLoading()}
+        sx={{ marginX: 1 }}
+      >
+        Generate Playlist
+      </Button>
+    </>
   );
 };
