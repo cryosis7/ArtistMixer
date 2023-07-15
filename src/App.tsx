@@ -7,7 +7,7 @@ import {
 } from "./models/datacontracts/PlaylistContract";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { getCode, getToken } from "./scripts/SpotifyAuth";
+import { exchangeRefreshToken, getCode, getToken } from "./scripts/SpotifyAuth";
 import { LoadingSpinner } from "./components/SelectArtists/Search/LoadingSpinner";
 import { SelectArtists } from "./components/SelectArtists/SelectArtists";
 import { RefinePlaylist } from "./components/RefinePlaylist/RefinePlaylist";
@@ -19,35 +19,54 @@ const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   const oldToken = sessionStorage.getItem('token');
-  //   if (oldToken !== null) {
-
-  //   }
-  // }, []);
-
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const code = searchParams.get("code") ?? "";
+    const code = new URLSearchParams(window.location.search).get("code") ?? "";
+    const refreshToken = localStorage.getItem("refreshToken");
 
-    if (code !== "") {
-      setIsAuthenticating(true);
-      getToken(code)
-        .then((value) => {
-          setIsAuthenticated(true);
-          setToken(value);
-          sessionStorage.setItem('token', value);
-        })
-        .catch((reason) => {
-          console.error(reason);
-          setIsAuthenticated(false);
-        })
-        .finally(() => setIsAuthenticating(false));
+    if (!isAuthenticating && !isAuthenticated) {
+      if (code !== "") {
+        setIsAuthenticating(true);
 
-      const cleanedURL = window.location.href.split("?")[0];
-      window.history.replaceState({}, document.title, cleanedURL);
+        try {
+          const cleanedURL = window.location.href.split("?")[0];
+          window.history.replaceState({}, document.title, cleanedURL);
+          getToken(code)
+            .then((value) => {
+              setIsAuthenticated(true);
+              setToken(value);
+            })
+            .catch((reason) => {
+              console.error(reason);
+              setIsAuthenticated(false);
+            })
+            .finally(() => {
+              setIsAuthenticating(false);
+            });
+        } catch (error) {
+          console.error("Error while exchanging fetching token");
+          setIsAuthenticating(false);
+        }
+      } else if (refreshToken !== null && refreshToken !== "" && token === "") {
+        setIsAuthenticating(true);
+
+        try {
+          exchangeRefreshToken(refreshToken)
+            .then((newToken) => {
+              setIsAuthenticated(true);
+              setToken(newToken);
+            })
+            .catch((reason) => {
+              console.error(reason);
+              setIsAuthenticated(false);
+            })
+            .finally(() => setIsAuthenticating(false));
+        } catch (e) {
+          console.error("Error while exchanging refresh token");
+          setIsAuthenticating(false);
+        }
+      }
     }
-  }, []);
+  }, [isAuthenticated, isAuthenticating, token]);
 
   useEffect(() => {
     if (playlist.songs.length > 0) {
