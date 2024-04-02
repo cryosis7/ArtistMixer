@@ -1,24 +1,24 @@
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2'
-import React, { useState } from 'react'
-import { PlaylistContract } from '../../models/datacontracts/PlaylistContract'
-import { steps } from '../Navigation/NavigationBar'
-import { DraftPlaylist } from './DraftPlaylist'
-import { createSpotifyPlaylist } from '../../scripts/CreateSpotifyPlaylist'
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import React, { useState } from 'react';
+import { PlaylistContract } from '../../models/datacontracts/PlaylistContract';
+import { steps } from '../Navigation/NavigationBar';
+import { DraftPlaylist } from './DraftPlaylist';
+import { createSpotifyPlaylist } from '../../scripts/CreateSpotifyPlaylist';
 
 interface RefinePlaylistProps {
-  playlist: PlaylistContract
-  setPlaylist: React.Dispatch<PlaylistContract>
-  setActiveStep: React.Dispatch<number>
-  token: string
+  playlist: PlaylistContract;
+  setPlaylist: React.Dispatch<PlaylistContract>;
+  setActiveStep: React.Dispatch<number>;
+  token: string;
 }
 
 interface SavedPlaylistState {
-  hasSaved: boolean
-  success?: boolean
+  hasSaved: boolean;
+  success?: boolean;
 }
 
 export const RefinePlaylist: React.FC<RefinePlaylistProps> = ({
@@ -27,35 +27,35 @@ export const RefinePlaylist: React.FC<RefinePlaylistProps> = ({
   setActiveStep,
   token,
 }) => {
-  const [playlistName, setPlaylistName] = useState<string>('')
-  const [hasError, setHasError] = useState<boolean>(false)
+  const [playlistName, setPlaylistName] = useState<string>('');
+  const [hasError, setHasError] = useState<boolean>(false);
   const [savedPlaylistState, setSavedPlaylistState] = useState<SavedPlaylistState>({
     hasSaved: false,
-  })
+  });
 
   if (token == null || token === '') {
-    return <Typography>Error in RefinePlaylist.tsx: Token is empty</Typography>
+    return <Typography>Error in RefinePlaylist.tsx: Token is empty</Typography>;
   }
 
   const handleSubmit = async () => {
     if (playlistName === '') {
-      setHasError(true)
-      return
+      setHasError(true);
+      return;
     }
 
-    const saveState = await createSpotifyPlaylist(playlistName, playlist, token)
+    const saveState = await createSpotifyPlaylist(playlistName, playlist, token);
     setSavedPlaylistState({
       hasSaved: true,
       success: saveState,
-    })
-  }
+    });
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (hasError && event.target.value !== '') {
-      setHasError(false)
+      setHasError(false);
     }
-    setPlaylistName(event.target.value)
-  }
+    setPlaylistName(event.target.value);
+  };
 
   return (
     <Grid2
@@ -120,5 +120,5 @@ export const RefinePlaylist: React.FC<RefinePlaylistProps> = ({
         </Grid2>
       )}
     </Grid2>
-  )
-}
+  );
+};

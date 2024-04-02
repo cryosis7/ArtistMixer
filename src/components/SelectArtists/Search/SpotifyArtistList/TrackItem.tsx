@@ -1,13 +1,13 @@
-import AddIcon from '@mui/icons-material/Add'
-import Avatar from '@mui/material/Avatar'
-import IconButton from '@mui/material/IconButton'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction'
-import ListItemText from '@mui/material/ListItemText'
+import AddIcon from '@mui/icons-material/Add';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import ListItemText from '@mui/material/ListItemText';
 
 interface TrackItemProps {
-  track: SpotifyApi.TrackObjectFull
-  addTrack: (track: SpotifyApi.TrackObjectFull) => void
+  track: SpotifyApi.TrackObjectFull;
+  addTrack: (track: SpotifyApi.TrackObjectFull) => void;
 }
 
 /**
@@ -32,5 +32,5 @@ export const TrackItem: React.FC<TrackItemProps> = ({ track, addTrack }) => {
         </IconButton>
       </ListItemSecondaryAction>
     </ListItemButton>
-  )
-}
+  );
+};

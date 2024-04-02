@@ -1,24 +1,24 @@
-import AddIcon from '@mui/icons-material/Add'
-import RemoveIcon from '@mui/icons-material/Remove'
-import PersonIcon from '@mui/icons-material/Person'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import ImageListItem from '@mui/material/ImageListItem'
-import ImageListItemBar from '@mui/material/ImageListItemBar'
-import { SxProps } from '@mui/material/styles'
-import React, { useState } from 'react'
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import PersonIcon from '@mui/icons-material/Person';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
+import { SxProps } from '@mui/material/styles';
+import React, { useState } from 'react';
 
 interface ArtistTileProps {
-  artist: SpotifyApi.ArtistObjectFull
-  toggleArtist: (artist: SpotifyApi.ArtistObjectFull) => void
-  selected: boolean
+  artist: SpotifyApi.ArtistObjectFull;
+  toggleArtist: (artist: SpotifyApi.ArtistObjectFull) => void;
+  selected: boolean;
 }
 
 export const ArtistTile: React.FC<ArtistTileProps> = ({ artist, toggleArtist, selected }) => {
-  const [isHovered, setIsHovered] = useState(false)
+  const [isHovered, setIsHovered] = useState(false);
 
-  const hasImages = artist.images.length > 0
-  const srcSet = artist.images?.map((image) => `${image.url} ${image.width}w`).join(', ')
+  const hasImages = artist.images.length > 0;
+  const srcSet = artist.images?.map((image) => `${image.url} ${image.width}w`).join(', ');
 
   const image = hasImages ? (
     <img srcSet={srcSet} width={'100%'} alt={artist.name} loading="lazy" />
@@ -30,15 +30,15 @@ export const ArtistTile: React.FC<ArtistTileProps> = ({ artist, toggleArtist, se
         width: '100%',
       }}
     />
-  )
+  );
 
   const handleMouseEnter = () => {
-    setIsHovered(true)
-  }
+    setIsHovered(true);
+  };
 
   const handleMouseLeave = () => {
-    setIsHovered(false)
-  }
+    setIsHovered(false);
+  };
 
   const selectedStyling: SxProps = selected
     ? {
@@ -46,7 +46,7 @@ export const ArtistTile: React.FC<ArtistTileProps> = ({ artist, toggleArtist, se
         borderColor: 'primary.light',
         padding: 2,
       }
-    : {}
+    : {};
 
   return (
     <Button
@@ -76,5 +76,5 @@ export const ArtistTile: React.FC<ArtistTileProps> = ({ artist, toggleArtist, se
         )}
       </ImageListItem>
     </Button>
-  )
-}
+  );
+};

@@ -1,12 +1,12 @@
-import Divider from '@mui/material/Divider'
-import Typography from '@mui/material/Typography'
-import React from 'react'
-import { SelectedArtists } from '../SelectArtists'
-import { SelectedArtistsList } from './SelectedArtistsList'
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
+import React from 'react';
+import { SelectedArtists } from '../SelectArtists';
+import { SelectedArtistsList } from './SelectedArtistsList';
 
 interface SelectedArtistsContainerProps {
-  selectedArtists: SelectedArtists
-  removeArtist: (artistId: string) => void
+  selectedArtists: SelectedArtists;
+  removeArtist: (artistId: string) => void;
 }
 
 export const SelectedArtistsContainer: React.FC<SelectedArtistsContainerProps> = ({
@@ -36,5 +36,5 @@ export const SelectedArtistsContainer: React.FC<SelectedArtistsContainerProps> =
         </Typography>
       )}
     </>
-  )
-}
+  );
+};

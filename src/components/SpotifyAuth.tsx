@@ -1,10 +1,10 @@
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import * as React from 'react'
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import * as React from 'react';
 
 interface SpotifyAuthProps {
-  clientId: string
-  scopes: string[]
+  clientId: string;
+  scopes: string[];
 }
 
 /**
@@ -20,10 +20,10 @@ const SpotifyAuth: React.FC<SpotifyAuthProps> = ({ clientId, scopes }) => {
       client_id: clientId,
       scope: scopes.join(' '),
       redirect_uri: `${window.location.origin}/ArtistMixer/`,
-    }).toString()
+    }).toString();
 
-    window.location.href = `https://accounts.spotify.com/authorize?${queryParams}`
-  }
+    window.location.href = `https://accounts.spotify.com/authorize?${queryParams}`;
+  };
 
   return (
     <Box textAlign="center" padding={6}>
@@ -31,7 +31,7 @@ const SpotifyAuth: React.FC<SpotifyAuthProps> = ({ clientId, scopes }) => {
         Authorize Spotify
       </Button>
     </Box>
-  )
-}
+  );
+};
 
-export default SpotifyAuth
+export default SpotifyAuth;

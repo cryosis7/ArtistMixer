@@ -1,49 +1,49 @@
-import Grid2 from '@mui/material/Unstable_Grid2'
-import React, { useState } from 'react'
-import { PlaylistContract } from '../../models/datacontracts/PlaylistContract'
-import { GeneratePlaylistControl } from './GeneratePlaylistControl'
-import { SearchContainer } from './Search/SearchContainer'
-import { LoadingSpinner } from './Search/LoadingSpinner'
-import Typography from '@mui/material/Typography'
-import { SelectedArtistsContainer } from './SelectedArtists/SelectedArtistsContainer'
+import Grid2 from '@mui/material/Unstable_Grid2';
+import React, { useState } from 'react';
+import { PlaylistContract } from '../../models/datacontracts/PlaylistContract';
+import { GeneratePlaylistControl } from './GeneratePlaylistControl';
+import { SearchContainer } from './Search/SearchContainer';
+import { LoadingSpinner } from './Search/LoadingSpinner';
+import Typography from '@mui/material/Typography';
+import { SelectedArtistsContainer } from './SelectedArtists/SelectedArtistsContainer';
 
 export type SpotifyMedia =
   | SpotifyApi.TrackObjectFull
   | SpotifyApi.ArtistObjectFull
-  | SpotifyApi.AlbumObjectFull
+  | SpotifyApi.AlbumObjectFull;
 
 export interface MediaItem {
   [id: string]: {
-    name: string
-    img?: string
-  }
+    name: string;
+    img?: string;
+  };
 }
 
 export interface Artist {
-  name: string
+  name: string;
 }
 
 export interface SelectedArtists {
-  [id: string]: Artist
+  [id: string]: Artist;
 }
 
 export interface SelectedMedia {
-  artist?: MediaItem
-  track?: MediaItem
-  album?: MediaItem
+  artist?: MediaItem;
+  track?: MediaItem;
+  album?: MediaItem;
 }
 
 interface SelectArtistsProps {
-  setPlaylist: React.Dispatch<PlaylistContract>
-  token: string
+  setPlaylist: React.Dispatch<PlaylistContract>;
+  token: string;
 }
 
 export const SelectArtists: React.FC<SelectArtistsProps> = ({ setPlaylist, token }) => {
-  const [selectedArtists, setSelectedArtists] = useState<SelectedArtists>({})
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [selectedArtists, setSelectedArtists] = useState<SelectedArtists>({});
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   if (token == null) {
-    return <Typography>Error in SelectArtists.tsx: Token is empty</Typography>
+    return <Typography>Error in SelectArtists.tsx: Token is empty</Typography>;
   }
 
   const addSelectedArtist = (artist: SpotifyApi.ArtistObjectFull) => {
@@ -52,22 +52,22 @@ export const SelectArtists: React.FC<SelectArtistsProps> = ({ setPlaylist, token
       [artist.id]: {
         name: artist.name,
       },
-    })
-  }
+    });
+  };
 
   const toggleArtist = (artist: SpotifyApi.ArtistObjectFull) => {
     if (selectedArtists[artist.id] !== undefined) {
-      removeArtist(artist.id)
+      removeArtist(artist.id);
     } else {
-      addSelectedArtist(artist)
+      addSelectedArtist(artist);
     }
-  }
+  };
 
   const removeArtist = (artistId: string) => {
-    delete selectedArtists[artistId]
+    delete selectedArtists[artistId];
 
-    setSelectedArtists(selectedArtists)
-  }
+    setSelectedArtists(selectedArtists);
+  };
 
   return (
     <Grid2 container direction="column" padding={2}>
@@ -104,5 +104,5 @@ export const SelectArtists: React.FC<SelectArtistsProps> = ({ setPlaylist, token
         )}
       </Grid2>
     </Grid2>
-  )
-}
+  );
+};

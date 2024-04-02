@@ -1,13 +1,13 @@
-import Step from '@mui/material/Step'
-import StepButton from '@mui/material/StepButton'
-import Stepper from '@mui/material/Stepper'
+import Step from '@mui/material/Step';
+import StepButton from '@mui/material/StepButton';
+import Stepper from '@mui/material/Stepper';
 
-type StepType = 'SELECT ARTISTS' | 'REFINE PLAYLIST' | 'GENERATE'
-export const steps: StepType[] = ['SELECT ARTISTS', 'REFINE PLAYLIST', 'GENERATE']
+type StepType = 'SELECT ARTISTS' | 'REFINE PLAYLIST' | 'GENERATE';
+export const steps: StepType[] = ['SELECT ARTISTS', 'REFINE PLAYLIST', 'GENERATE'];
 
 interface NavigationBarProps {
-  activeStep: number
-  setActiveStep: React.Dispatch<React.SetStateAction<number>>
+  activeStep: number;
+  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const NavigationBar: React.FC<NavigationBarProps> = ({ activeStep, setActiveStep }) => {
@@ -19,5 +19,5 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({ activeStep, setAct
         </Step>
       ))}
     </Stepper>
-  )
-}
+  );
+};

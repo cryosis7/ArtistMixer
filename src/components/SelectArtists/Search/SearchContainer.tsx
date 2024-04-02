@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import { SelectedArtists } from '../SelectArtists'
-import { LoadingSpinner } from './LoadingSpinner'
-import { SearchForm } from './SearchForm'
-import { SpotifyArtistList } from './SpotifyArtistList/SpotifyArtistList'
+import React, { useState } from 'react';
+import { SelectedArtists } from '../SelectArtists';
+import { LoadingSpinner } from './LoadingSpinner';
+import { SearchForm } from './SearchForm';
+import { SpotifyArtistList } from './SpotifyArtistList/SpotifyArtistList';
 
 interface SearchContainerProps {
-  toggleArtist: (artists: SpotifyApi.ArtistObjectFull) => void
-  selectedArtists: SelectedArtists
-  token: string
+  toggleArtist: (artists: SpotifyApi.ArtistObjectFull) => void;
+  selectedArtists: SelectedArtists;
+  token: string;
 }
 
 export const SearchContainer: React.FC<SearchContainerProps> = ({
@@ -15,8 +15,8 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
   selectedArtists,
   token,
 }) => {
-  const [searchResults, setSearchResults] = useState<SpotifyApi.SearchResponse>({})
-  const [isSearching, setIsSearching] = useState<boolean>(false)
+  const [searchResults, setSearchResults] = useState<SpotifyApi.SearchResponse>({});
+  const [isSearching, setIsSearching] = useState<boolean>(false);
 
   return (
     <>
@@ -34,5 +34,5 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
         />
       )}
     </>
-  )
-}
+  );
+};

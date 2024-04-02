@@ -1,81 +1,81 @@
-import React, { useEffect, useState } from 'react'
-import './App.css'
-import { NavigationBar, steps } from './components/Navigation/NavigationBar'
-import { Playlist, PlaylistContract } from './models/datacontracts/PlaylistContract'
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
-import { exchangeRefreshToken, getCode, getToken } from './scripts/SpotifyAuth'
-import { LoadingSpinner } from './components/SelectArtists/Search/LoadingSpinner'
-import { SelectArtists } from './components/SelectArtists/SelectArtists'
-import { RefinePlaylist } from './components/RefinePlaylist/RefinePlaylist'
+import React, { useEffect, useState } from 'react';
+import './App.css';
+import { NavigationBar, steps } from './components/Navigation/NavigationBar';
+import { Playlist, PlaylistContract } from './models/datacontracts/PlaylistContract';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import { exchangeRefreshToken, getCode, getToken } from './scripts/SpotifyAuth';
+import { LoadingSpinner } from './components/SelectArtists/Search/LoadingSpinner';
+import { SelectArtists, SelectedArtists } from './components/SelectArtists/SelectArtists';
+import { RefinePlaylist } from './components/RefinePlaylist/RefinePlaylist';
 
 const App: React.FC = () => {
-  const [activeStep, setActiveStep] = useState<number>(0)
-  const [playlist, setPlaylist] = useState<PlaylistContract>(new Playlist())
-  const [token, setToken] = useState<string>('')
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
-  const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false)
+  const [activeStep, setActiveStep] = useState<number>(0);
+  const [playlist, setPlaylist] = useState<PlaylistContract>(new Playlist());
+  const [token, setToken] = useState<string>('');
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
 
   useEffect(() => {
-    const code = new URLSearchParams(window.location.search).get('code') ?? ''
-    const refreshToken = localStorage.getItem('refreshToken')
+    const code = new URLSearchParams(window.location.search).get('code') ?? '';
+    const refreshToken = localStorage.getItem('refreshToken');
 
     if (!isAuthenticating && !isAuthenticated) {
       if (code !== '') {
-        setIsAuthenticating(true)
+        setIsAuthenticating(true);
 
         try {
-          const cleanedURL = window.location.href.split('?')[0]
-          window.history.replaceState({}, document.title, cleanedURL)
+          const cleanedURL = window.location.href.split('?')[0];
+          window.history.replaceState({}, document.title, cleanedURL);
           getToken(code)
             .then((value) => {
-              setIsAuthenticated(true)
-              setToken(value)
+              setIsAuthenticated(true);
+              setToken(value);
             })
             .catch((reason) => {
-              console.error(reason)
-              setIsAuthenticated(false)
+              console.error(reason);
+              setIsAuthenticated(false);
             })
             .finally(() => {
-              setIsAuthenticating(false)
-            })
+              setIsAuthenticating(false);
+            });
         } catch (error) {
-          console.error('Error while exchanging fetching token')
-          setIsAuthenticating(false)
+          console.error('Error while exchanging fetching token');
+          setIsAuthenticating(false);
         }
       } else if (refreshToken !== null && refreshToken !== '' && token === '') {
-        setIsAuthenticating(true)
+        setIsAuthenticating(true);
 
         try {
           exchangeRefreshToken(refreshToken)
             .then((newToken) => {
-              setIsAuthenticated(true)
-              setToken(newToken)
+              setIsAuthenticated(true);
+              setToken(newToken);
             })
             .catch((reason) => {
-              console.error(reason)
-              setIsAuthenticated(false)
+              console.error(reason);
+              setIsAuthenticated(false);
             })
-            .finally(() => setIsAuthenticating(false))
+            .finally(() => setIsAuthenticating(false));
         } catch (e) {
-          console.error('Error while exchanging refresh token')
-          setIsAuthenticating(false)
+          console.error('Error while exchanging refresh token');
+          setIsAuthenticating(false);
         }
       }
     }
-  }, [isAuthenticated, isAuthenticating, token])
+  }, [isAuthenticated, isAuthenticating, token]);
 
   useEffect(() => {
     if (playlist.songs.length > 0) {
-      setActiveStep(steps.indexOf('REFINE PLAYLIST'))
+      setActiveStep(steps.indexOf('REFINE PLAYLIST'));
     } else {
-      setActiveStep(steps.indexOf('SELECT ARTISTS'))
+      setActiveStep(steps.indexOf('SELECT ARTISTS'));
     }
-  }, [playlist])
+  }, [playlist]);
 
   const getCurrentScreen = () => {
     if (steps[activeStep] === 'SELECT ARTISTS') {
-      return <SelectArtists setPlaylist={setPlaylist} token={token} />
+      return <SelectArtists setPlaylist={setPlaylist} token={token} />;
     } else if (steps[activeStep] === 'REFINE PLAYLIST') {
       return (
         <RefinePlaylist
@@ -84,12 +84,10 @@ const App: React.FC = () => {
           setActiveStep={setActiveStep}
           token={token}
         />
-      )
-      // } else if (steps[activeStep] === 'GENERATE') {
-      //   return <TempGeneratePlaylist />
+      );
     }
-    return <></>
-  }
+    return <></>;
+  };
 
   return (
     <>
@@ -107,7 +105,7 @@ const App: React.FC = () => {
         </Box>
       )}
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

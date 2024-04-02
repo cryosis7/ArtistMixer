@@ -1,36 +1,36 @@
-import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined'
-import IconButton from '@mui/material/IconButton'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import { SelectedArtists } from '../SelectArtists'
-import ListItemText from '@mui/material/ListItemText'
-import React, { useState } from 'react'
-import ListItemButton from '@mui/material/ListItemButton'
+import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import { SelectedArtists } from '../SelectArtists';
+import ListItemText from '@mui/material/ListItemText';
+import React, { useState } from 'react';
+import ListItemButton from '@mui/material/ListItemButton';
 
 interface SelectedArtistsListProps {
-  selectedArtists: SelectedArtists
-  removeArtist: (artistId: string) => void
+  selectedArtists: SelectedArtists;
+  removeArtist: (artistId: string) => void;
 }
 
 export const SelectedArtistsList: React.FC<SelectedArtistsListProps> = ({
   selectedArtists,
   removeArtist,
 }) => {
-  const [selectedItem, setSelectedItem] = useState<string>('')
+  const [selectedItem, setSelectedItem] = useState<string>('');
 
   if (selectedArtists.length) {
-    return <></>
+    return <></>;
   }
 
   const handleRemove = (id: string) => {
-    removeArtist(id)
-    setSelectedItem('')
-  }
+    removeArtist(id);
+    setSelectedItem('');
+  };
 
   return (
     <List>
       {Object.entries(selectedArtists).map(([id, artist]) => {
-        const isSelected = selectedItem === id
+        const isSelected = selectedItem === id;
 
         return (
           <ListItemButton
@@ -46,8 +46,8 @@ export const SelectedArtistsList: React.FC<SelectedArtistsListProps> = ({
                   aria-label="remove"
                   size="small"
                   onClick={(event) => {
-                    event.stopPropagation()
-                    handleRemove(id)
+                    event.stopPropagation();
+                    handleRemove(id);
                   }}
                 >
                   <RemoveCircleOutlineOutlinedIcon color={isSelected ? 'error' : 'action'} />
@@ -57,8 +57,8 @@ export const SelectedArtistsList: React.FC<SelectedArtistsListProps> = ({
               <ListItemText primary={artist.name} />
             </ListItem>
           </ListItemButton>
-        )
+        );
       })}
     </List>
-  )
-}
+  );
+};

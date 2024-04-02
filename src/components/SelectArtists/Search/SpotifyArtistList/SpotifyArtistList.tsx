@@ -1,12 +1,12 @@
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2'
-import React, { useMemo } from 'react'
-import { SelectedArtists } from '../../SelectArtists'
-import { ArtistTile } from './ArtistTile'
+import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import React, { useMemo } from 'react';
+import { SelectedArtists } from '../../SelectArtists';
+import { ArtistTile } from './ArtistTile';
 
 interface SpotifyArtistListProps {
-  searchResults: SpotifyApi.SearchResponse
-  toggleArtist: (item: SpotifyApi.ArtistObjectFull) => void
-  selectedArtists: SelectedArtists
+  searchResults: SpotifyApi.SearchResponse;
+  toggleArtist: (item: SpotifyApi.ArtistObjectFull) => void;
+  selectedArtists: SelectedArtists;
 }
 
 export const SpotifyArtistList: React.FC<SpotifyArtistListProps> = ({
@@ -14,7 +14,7 @@ export const SpotifyArtistList: React.FC<SpotifyArtistListProps> = ({
   toggleArtist,
   selectedArtists,
 }) => {
-  const artistIds = useMemo(() => Object.keys(selectedArtists), [selectedArtists])
+  const artistIds = useMemo(() => Object.keys(selectedArtists), [selectedArtists]);
 
   if (searchResults.artists) {
     return (
@@ -29,11 +29,11 @@ export const SpotifyArtistList: React.FC<SpotifyArtistListProps> = ({
           </Grid2>
         ))}
       </Grid2>
-    )
+    );
   }
   return (
     <>
       <p>media.artists is undefined</p>
     </>
-  )
-}
+  );
+};
