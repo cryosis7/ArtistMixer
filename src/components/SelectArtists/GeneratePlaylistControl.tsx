@@ -15,9 +15,13 @@ interface GeneratePlaylistControlProps {
   setIsLoading: React.Dispatch<boolean>;
 }
 
-export const GeneratePlaylistControl: React.FC<
-  GeneratePlaylistControlProps
-> = ({ selectedArtists, setPlaylist, token, isLoading, setIsLoading }) => {
+export const GeneratePlaylistControl: React.FC<GeneratePlaylistControlProps> = ({
+  selectedArtists,
+  setPlaylist,
+  token,
+  isLoading,
+  setIsLoading,
+}) => {
   const [playlistSize, setPlaylistSize] = useState<number>(30);
 
   const url =

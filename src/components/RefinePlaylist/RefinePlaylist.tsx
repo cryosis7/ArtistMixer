@@ -16,6 +16,11 @@ interface RefinePlaylistProps {
   token: string;
 }
 
+interface SavedPlaylistState {
+  hasSaved: boolean;
+  success?: boolean;
+}
+
 export const RefinePlaylist: React.FC<RefinePlaylistProps> = ({
   playlist,
   setPlaylist,
@@ -24,18 +29,28 @@ export const RefinePlaylist: React.FC<RefinePlaylistProps> = ({
 }) => {
   const [playlistName, setPlaylistName] = useState<string>("");
   const [hasError, setHasError] = useState<boolean>(false);
+  const [savedPlaylistState, setSavedPlaylistState] =
+    useState<SavedPlaylistState>({ hasSaved: false });
 
   if (token == null || token === "") {
     return <Typography>Error in RefinePlaylist.tsx: Token is empty</Typography>;
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (playlistName === "") {
       setHasError(true);
       return;
     }
 
-    createSpotifyPlaylist(playlistName, playlist, token);
+    const saveState = await createSpotifyPlaylist(
+      playlistName,
+      playlist,
+      token,
+    );
+    setSavedPlaylistState({
+      hasSaved: true,
+      success: saveState,
+    });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,9 +81,22 @@ export const RefinePlaylist: React.FC<RefinePlaylistProps> = ({
             />
           </Grid2>
           <Grid2 textAlign="center" paddingBottom={4}>
-            <Button variant="contained" onClick={handleSubmit}>
-              Save Playlist To Spotify
-            </Button>
+            {!savedPlaylistState.hasSaved ? (
+              <Button variant="contained" onClick={handleSubmit}>
+                Save Playlist To Spotify
+              </Button>
+            ) : (
+              <Typography
+                variant="body1"
+                fontStyle="italic"
+                align="center"
+                color="GrayText"
+              >
+                {savedPlaylistState.success
+                  ? "Playlist Saved"
+                  : "There was an error saving your playlist"}
+              </Typography>
+            )}
           </Grid2>
           <Grid2>
             <Divider />

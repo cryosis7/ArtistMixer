@@ -22,10 +22,11 @@ export const createSpotifyPlaylist = async (
   if (response.ok) {
     // Handle successful response
     // For example, you can parse the response body as JSON if it returns any data
-    const data = await response.json();
-    console.log(data);
+    // const data = await response.json();
+    return true;
   } else {
     // Handle error response
     console.error(`Request failed with status ${response.status}`);
+    return false;
   }
 };
