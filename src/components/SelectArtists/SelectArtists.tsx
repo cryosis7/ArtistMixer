@@ -1,84 +1,79 @@
-import Grid2 from "@mui/material/Unstable_Grid2";
-import React, { useState } from "react";
-import { PlaylistContract } from "../../models/datacontracts/PlaylistContract";
-import { GeneratePlaylistControl } from "./GeneratePlaylistControl";
-import { SearchContainer } from "./Search/SearchContainer";
-import { SelectedMediaContainer } from "./SelectedMedia/SelectedMediaContainer";
-import { LoadingSpinner } from "./Search/LoadingSpinner";
-import Typography from "@mui/material/Typography";
+import Grid2 from '@mui/material/Unstable_Grid2'
+import React, { useState } from 'react'
+import { PlaylistContract } from '../../models/datacontracts/PlaylistContract'
+import { GeneratePlaylistControl } from './GeneratePlaylistControl'
+import { SearchContainer } from './Search/SearchContainer'
+import { LoadingSpinner } from './Search/LoadingSpinner'
+import Typography from '@mui/material/Typography'
+import { SelectedArtistsContainer } from './SelectedArtists/SelectedArtistsContainer'
 
 export type SpotifyMedia =
   | SpotifyApi.TrackObjectFull
   | SpotifyApi.ArtistObjectFull
-  | SpotifyApi.AlbumObjectFull;
+  | SpotifyApi.AlbumObjectFull
 
 export interface MediaItem {
   [id: string]: {
-    name: string;
-    img?: string;
-  };
+    name: string
+    img?: string
+  }
+}
+
+export interface Artist {
+  name: string
+}
+
+export interface SelectedArtists {
+  [id: string]: Artist
 }
 
 export interface SelectedMedia {
-  artist?: MediaItem;
-  track?: MediaItem;
-  album?: MediaItem;
+  artist?: MediaItem
+  track?: MediaItem
+  album?: MediaItem
 }
 
 interface SelectArtistsProps {
-  setPlaylist: React.Dispatch<PlaylistContract>;
-  token: string;
+  setPlaylist: React.Dispatch<PlaylistContract>
+  token: string
 }
 
-export const SelectArtists: React.FC<SelectArtistsProps> = ({
-  setPlaylist,
-  token,
-}) => {
-  const [selectedMedia, setSelectedMedia] = useState<SelectedMedia>({});
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+export const SelectArtists: React.FC<SelectArtistsProps> = ({ setPlaylist, token }) => {
+  const [selectedArtists, setSelectedArtists] = useState<SelectedArtists>({})
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   if (token == null) {
-    return <Typography>Error in SelectArtists.tsx: Token is empty</Typography>;
+    return <Typography>Error in SelectArtists.tsx: Token is empty</Typography>
   }
 
-  const addSelectedMedia = (media: SpotifyMedia) => {
-    setSelectedMedia({
-      ...selectedMedia,
-      [media.type]: {
-        ...selectedMedia[media.type],
-        [media.id]: { name: media.name },
+  const addSelectedArtist = (artist: SpotifyApi.ArtistObjectFull) => {
+    setSelectedArtists({
+      ...selectedArtists,
+      [artist.id]: {
+        name: artist.name,
       },
-    });
-  };
+    })
+  }
 
   const toggleArtist = (artist: SpotifyApi.ArtistObjectFull) => {
-    if (selectedMedia.artist?.[artist.id]) {
-      removeArtist(artist.id);
+    if (selectedArtists[artist.id] !== undefined) {
+      removeArtist(artist.id)
     } else {
-      addSelectedMedia(artist);
+      addSelectedArtist(artist)
     }
-  };
+  }
 
-  const removeArtist = (artist: string) => {
-    if (!selectedMedia.artist) {
-      return;
-    }
+  const removeArtist = (artistId: string) => {
+    delete selectedArtists[artistId]
 
-    delete selectedMedia.artist[artist];
-
-    setSelectedMedia({
-      ...selectedMedia,
-      artist: {
-        ...selectedMedia.artist,
-      },
-    });
-  };
+    setSelectedArtists(selectedArtists)
+  }
 
   return (
     <Grid2 container direction="column" padding={2}>
       <Grid2 textAlign="center">
         <GeneratePlaylistControl
-          selectedArtists={selectedMedia}
+          selectedArtists={selectedArtists}
           setPlaylist={setPlaylist}
           token={token}
           isLoading={() => isLoading}
@@ -93,15 +88,15 @@ export const SelectArtists: React.FC<SelectArtistsProps> = ({
         ) : (
           <>
             <Grid2 xs={12} md={4}>
-              <SelectedMediaContainer
-                selectedMedia={selectedMedia}
+              <SelectedArtistsContainer
+                selectedArtists={selectedArtists}
                 removeArtist={removeArtist}
               />
             </Grid2>
             <Grid2 xs>
               <SearchContainer
                 toggleArtist={toggleArtist}
-                selectedMedia={selectedMedia}
+                selectedArtists={selectedArtists}
                 token={token}
               />
             </Grid2>
@@ -109,5 +104,5 @@ export const SelectArtists: React.FC<SelectArtistsProps> = ({
         )}
       </Grid2>
     </Grid2>
-  );
-};
+  )
+}

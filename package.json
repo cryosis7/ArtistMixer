@@ -33,9 +33,9 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "react-scripts start",
-    "prebuild": "yarn lint --fix && yarn format",
+    "prebuild": "npm run lint --fix && npm run format",
     "build": "react-scripts build",
-    "predeploy": "yarn build",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
