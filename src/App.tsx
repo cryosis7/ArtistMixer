@@ -91,7 +91,7 @@ const App: React.FC = () => {
         />
       );
     } else if (steps[activeStep] === 'GENERATE') {
-      <Generate selectedArtists={selectedArtists} setPlaylist={setPlaylist} token={token} />;
+      return <Generate selectedArtists={selectedArtists} setPlaylist={setPlaylist} token={token} />;
     } else if (steps[activeStep] === 'REFINE') {
       return (
         <RefinePlaylist
