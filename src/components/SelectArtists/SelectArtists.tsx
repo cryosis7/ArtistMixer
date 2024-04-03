@@ -7,18 +7,6 @@ import { LoadingSpinner } from './Search/LoadingSpinner';
 import Typography from '@mui/material/Typography';
 import { SelectedArtistsContainer } from './SelectedArtists/SelectedArtistsContainer';
 
-export type SpotifyMedia =
-  | SpotifyApi.TrackObjectFull
-  | SpotifyApi.ArtistObjectFull
-  | SpotifyApi.AlbumObjectFull;
-
-export interface MediaItem {
-  [id: string]: {
-    name: string;
-    img?: string;
-  };
-}
-
 export interface Artist {
   name: string;
 }
@@ -27,19 +15,19 @@ export interface SelectedArtists {
   [id: string]: Artist;
 }
 
-export interface SelectedMedia {
-  artist?: MediaItem;
-  track?: MediaItem;
-  album?: MediaItem;
-}
-
 interface SelectArtistsProps {
-  setPlaylist: React.Dispatch<PlaylistContract>;
+  setPlaylist: React.Dispatch<React.SetStateAction<PlaylistContract>>;
   token: string;
+  selectedArtists: SelectedArtists;
+  setSelectedArtists: React.Dispatch<React.SetStateAction<SelectedArtists>>;
 }
 
-export const SelectArtists: React.FC<SelectArtistsProps> = ({ setPlaylist, token }) => {
-  const [selectedArtists, setSelectedArtists] = useState<SelectedArtists>({});
+export const SelectArtists: React.FC<SelectArtistsProps> = ({
+  setPlaylist,
+  token,
+  selectedArtists,
+  setSelectedArtists,
+}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   if (token == null) {

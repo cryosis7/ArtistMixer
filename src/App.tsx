@@ -15,12 +15,14 @@ const App: React.FC = () => {
   const [token, setToken] = useState<string>('');
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
+  const [errorAuthenticating, setErrorAuthenticating] = useState<boolean>(false);
+  const [selectedArtists, setSelectedArtists] = useState<SelectedArtists>({});
 
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get('code') ?? '';
     const refreshToken = localStorage.getItem('refreshToken');
 
-    if (!isAuthenticating && !isAuthenticated) {
+    if (!isAuthenticating && !isAuthenticated && !errorAuthenticating) {
       if (code !== '') {
         setIsAuthenticating(true);
 
@@ -35,6 +37,7 @@ const App: React.FC = () => {
             .catch((reason) => {
               console.error(reason);
               setIsAuthenticated(false);
+              setErrorAuthenticating(true);
             })
             .finally(() => {
               setIsAuthenticating(false);
@@ -42,6 +45,7 @@ const App: React.FC = () => {
         } catch (error) {
           console.error('Error while exchanging fetching token');
           setIsAuthenticating(false);
+          setErrorAuthenticating(true);
         }
       } else if (refreshToken !== null && refreshToken !== '' && token === '') {
         setIsAuthenticating(true);
@@ -55,19 +59,21 @@ const App: React.FC = () => {
             .catch((reason) => {
               console.error(reason);
               setIsAuthenticated(false);
+              setErrorAuthenticating(true);
             })
             .finally(() => setIsAuthenticating(false));
         } catch (e) {
           console.error('Error while exchanging refresh token');
           setIsAuthenticating(false);
+          setErrorAuthenticating(true);
         }
       }
     }
-  }, [isAuthenticated, isAuthenticating, token]);
+  }, [isAuthenticated, isAuthenticating, token, errorAuthenticating]);
 
   useEffect(() => {
     if (playlist.songs.length > 0) {
-      setActiveStep(steps.indexOf('REFINE PLAYLIST'));
+      setActiveStep(steps.indexOf('REFINE'));
     } else {
       setActiveStep(steps.indexOf('SELECT ARTISTS'));
     }
@@ -75,8 +81,17 @@ const App: React.FC = () => {
 
   const getCurrentScreen = () => {
     if (steps[activeStep] === 'SELECT ARTISTS') {
-      return <SelectArtists setPlaylist={setPlaylist} token={token} />;
-    } else if (steps[activeStep] === 'REFINE PLAYLIST') {
+      return (
+        <SelectArtists
+          setPlaylist={setPlaylist}
+          token={token}
+          selectedArtists={selectedArtists}
+          setSelectedArtists={setSelectedArtists}
+        />
+      );
+    } else if (steps[activeStep] === 'GENERATE') {
+      <div>Generate</div>;
+    } else if (steps[activeStep] === 'REFINE') {
       return (
         <RefinePlaylist
           playlist={playlist}

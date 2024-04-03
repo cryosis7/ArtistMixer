@@ -7,12 +7,6 @@ interface SpotifyAuthProps {
   scopes: string[];
 }
 
-/**
- * Authorizes the user with Spotify
- * @param {string} clientId
- * @param {string[]} scopes
- * @returns {JSX.Element} The button to authorize the user or the request token component if the code is present
- */
 const SpotifyAuth: React.FC<SpotifyAuthProps> = ({ clientId, scopes }) => {
   const authorizeSpotify = () => {
     const queryParams = new URLSearchParams({

@@ -56,7 +56,7 @@ export const exchangeRefreshToken = async (refreshToken: string): Promise<string
 
       return data.token as string;
     } catch (err) {
-      console.log(JSON.stringify(err));
+      console.log(err);
       throw err;
     }
   }
