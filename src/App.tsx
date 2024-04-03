@@ -8,6 +8,7 @@ import { exchangeRefreshToken, getCode, getToken } from './scripts/SpotifyAuth';
 import { LoadingSpinner } from './components/SelectArtists/Search/LoadingSpinner';
 import { SelectArtists, SelectedArtists } from './components/SelectArtists/SelectArtists';
 import { RefinePlaylist } from './components/RefinePlaylist/RefinePlaylist';
+import { Generate } from './components/Generate/Generate';
 
 const App: React.FC = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -90,7 +91,7 @@ const App: React.FC = () => {
         />
       );
     } else if (steps[activeStep] === 'GENERATE') {
-      <div>Generate</div>;
+      <Generate selectedArtists={selectedArtists} setPlaylist={setPlaylist} token={token} />;
     } else if (steps[activeStep] === 'REFINE') {
       return (
         <RefinePlaylist

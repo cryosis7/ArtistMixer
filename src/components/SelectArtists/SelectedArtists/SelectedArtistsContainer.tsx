@@ -24,7 +24,7 @@ export const SelectedArtistsContainer: React.FC<SelectedArtistsContainerProps> =
 
       <Divider sx={{ my: 4, mx: 8 }} />
 
-      {selectedArtists.length ? (
+      {Object.keys(selectedArtists).length ? (
         <SelectedArtistsList selectedArtists={selectedArtists} removeArtist={removeArtist} />
       ) : (
         <Typography align="left" color="text.secondary">

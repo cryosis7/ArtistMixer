@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
 import React, { useState } from 'react';
 import { PlaylistContract, Song } from '../../models/datacontracts/PlaylistContract';
-import { SelectedArtists } from './SelectArtists';
+import { SelectedArtists } from '../SelectArtists/SelectArtists';
 
 interface GeneratePlaylistControlProps {
   selectedArtists: SelectedArtists;
