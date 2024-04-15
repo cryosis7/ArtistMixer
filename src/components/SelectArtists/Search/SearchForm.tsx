@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Grid2 from '@mui/material/Unstable_Grid2';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 interface SearchProps {
   setSearchResults: React.Dispatch<React.SetStateAction<SpotifyApi.SearchResponse>>;
@@ -14,11 +14,16 @@ const contentType: ContentTypes = 'artist';
 
 export const SearchForm: React.FC<SearchProps> = ({ setSearchResults, setIsSearching, token }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
-  // const token = localStorage.getItem("token") ?? "";
+  const [hasError, setHasError] = useState(false);
 
   if (token === '') {
     console.error('No token found - Auth test must be failing');
   }
+
+  const isInvalid = () => {
+    setHasError(searchTerm === '');
+    return searchTerm === '';
+  };
 
   const handleSearch = () => {
     setIsSearching(true);
@@ -48,7 +53,19 @@ export const SearchForm: React.FC<SearchProps> = ({ setSearchResults, setIsSearc
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (isInvalid()) {
+      return;
+    }
+
     handleSearch();
+  };
+
+  const handleChange = (newText: string) => {
+    if (hasError && newText !== '') {
+      setHasError(false);
+    }
+
+    setSearchTerm(newText);
   };
 
   return (
@@ -65,11 +82,12 @@ export const SearchForm: React.FC<SearchProps> = ({ setSearchResults, setIsSearc
             value={searchTerm}
             size="small"
             fullWidth
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => handleChange(e.target.value)}
+            error={hasError}
           />
         </Grid2>
         <Grid2>
-          <Button variant="contained" onClick={handleSearch}>
+          <Button type="submit" variant="contained">
             Search
           </Button>
         </Grid2>
