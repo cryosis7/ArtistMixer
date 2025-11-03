@@ -1,46 +1,162 @@
-# Getting Started with Create React App
+# Artist Mixer Frontend - React + TypeScript + Vite
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A feature-rich web application for creating and managing Spotify playlists based on artist selections.
 
-## Available Scripts
+## Project Structure
 
-In the project directory, you can run:
+This project follows a **feature-first architecture** with clear separation of concerns:
 
-### `yarn start`
+```
+src/
+  app/
+    App.tsx                    # Main app component
+    App.css                    # Global styles
+    App.test.tsx               # App tests
+    providers/                 # App-level context providers
+      AuthProvider.tsx         # Authentication context & state
+      PlaylistProvider.tsx     # Playlist state management
+      SelectedArtistsProvider.tsx  # Selected artists state
+    hooks/                     # App-level custom hooks
+      usePlaylist.ts
+      useSelectedArtists.ts
+    index.ts                   # App exports
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  features/
+    auth/                      # Authentication feature
+      components/              # Auth UI components
+      services/
+        spotifyAuth.ts         # Spotify OAuth & token logic
+      hooks/
+        useAuth.ts             # Auth context hook
+      index.ts
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+    selectArtists/             # Artist selection feature
+      components/
+        SelectArtists.tsx      # Main component
+        Search/                # Search sub-components
+        SelectedArtists/       # Selected artists display
+      types/
+        SelectedArtists.ts     # Types for selected artists
+      index.ts
 
-### `yarn test`
+    generatePlaylist/          # Playlist generation feature
+      components/
+        Generate.tsx           # Generation UI
+        GeneratePlaylistControl.tsx
+      services/
+        createSpotifyPlaylist.ts  # API calls
+      index.ts
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    refinePlaylist/            # Playlist refinement feature
+      components/
+        RefinePlaylist.tsx     # Main refinement UI
+        DraftPlaylist.tsx      # Draft playlist display
+      index.ts
 
-### `yarn build`
+  shared/                      # Shared utilities & components
+    components/
+      NavigationBar.tsx        # Step navigation
+    constants/
+      steps.ts                 # Step definitions
+    types/
+      playlist.ts              # Playlist & Song interfaces
+    utils/
+      index.ts                 # Utility functions
+    hooks/                     # Shared hooks (future)
+    api/                       # API client (future)
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## State Management
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The app uses **React Context + Hooks** for state management:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **AuthProvider**: Manages authentication state, tokens, and login flow
+- **PlaylistProvider**: Manages the current playlist state
+- **SelectedArtistsProvider**: Manages the pool of selected artists
 
-### `yarn eject`
+All providers are composed at the root level in `App.tsx`.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Path Aliases
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The project uses TypeScript path aliases for cleaner imports:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```typescript
+// Instead of:
+import { SelectArtists } from '../../../../features/selectArtists/components/SelectArtists';
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+// Use:
+import { SelectArtists } from '@features/selectArtists';
+```
 
-## Learn More
+Available aliases:
+- `@app/*` → `src/app/*`
+- `@features/*` → `src/features/*`
+- `@shared/*` → `src/shared/*`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Adding a New Feature
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Create a new folder under `src/features/<feature-name>`
+2. Organize by purpose:
+   ```
+   src/features/myFeature/
+     components/
+     services/
+     hooks/
+     types/
+     index.ts  (export public API)
+   ```
+3. Export public types and components from `index.ts`
+4. Use path aliases in imports
+
+## Testing
+
+- Feature-level tests live alongside components
+- App-level tests in `src/app/App.test.tsx`
+- Tests wrapped with necessary providers
+
+## Tech Stack
+
+- **React 19** with TypeScript
+- **Vite** for fast development & builds
+- **Material-UI (MUI)** for component library
+- **Spotify Web API** for backend integration
+
+## Configuration
+
+### TypeScript Path Aliases
+
+Configured in `tsconfig.app.json` and `vite.config.ts` for both TS and Vite resolution.
+
+### ESLint
+
+Strict TypeScript linting with:
+- `noUnusedLocals` and `noUnusedParameters`
+- `strict` mode enabled
+- Verbatim module syntax for proper type imports
+
+## Getting Started
+
+```bash
+# Install dependencies
+yarn install
+
+# Development server
+yarn dev
+
+# Build for production
+yarn build
+
+# Lint code
+yarn lint
+
+# Run tests
+yarn test
+yarn test:watch
+```
+
+## Future Improvements
+
+- Add React Router for multi-page support
+- Extract API client layer
+- Add shared hooks for common patterns
+- Server-side playlist persistence

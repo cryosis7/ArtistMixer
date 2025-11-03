@@ -10,6 +10,8 @@
 
 # production
 /build
+/bin
+/dist
 
 # misc
 .DS_Store
@@ -24,3 +26,7 @@ yarn-error.log*
 
 # Secrets and credentials
 .env
+
+# Yarn
+.yarn/install-state.gz
+.yarn/build-state.gz
