@@ -1401,13 +1401,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/spotify-api@npm:^0.0.25":
-  version: 0.0.25
-  resolution: "@types/spotify-api@npm:0.0.25"
-  checksum: 10c0/21fc548a41bc08e1423bb316f9e4f5699f00b1e97179fcfb9f854cc526d1442c7305f5765cdaa92a9a38f1ff07792edd16adde6ced8b666e8bf0accd04e0a5d1
-  languageName: node
-  linkType: hard
-
 "@types/tough-cookie@npm:*":
   version: 4.0.5
   resolution: "@types/tough-cookie@npm:4.0.5"
@@ -1777,7 +1770,6 @@ __metadata:
     "@types/node": "npm:^24.6.0"
     "@types/react": "npm:^19.1.16"
     "@types/react-dom": "npm:^19.1.9"
-    "@types/spotify-api": "npm:^0.0.25"
     "@vitejs/plugin-react-swc": "npm:^4.1.0"
     eslint: "npm:^9.36.0"
     eslint-plugin-react-hooks: "npm:^5.2.0"

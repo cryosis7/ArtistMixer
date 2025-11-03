@@ -7,10 +7,11 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import { type SxProps } from '@mui/material/styles';
 import React, { useState } from 'react';
+import type { SearchArtist } from '@shared/types/artist';
 
 interface ArtistTileProps {
-  artist: SpotifyApi.ArtistObjectFull;
-  toggleArtist: (artist: SpotifyApi.ArtistObjectFull) => void;
+  artist: SearchArtist;
+  toggleArtist: (artist: SearchArtist) => void;
   selected: boolean;
 }
 

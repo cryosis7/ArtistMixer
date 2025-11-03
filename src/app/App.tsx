@@ -1,18 +1,18 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
-import { useAtom } from 'jotai';
-import { NavigationBar } from '@shared/components/NavigationBar';
-import { steps } from '@shared/constants/steps';
+import {useAtom} from 'jotai';
+import {NavigationBar} from '@shared/components/NavigationBar';
+import {steps} from '@shared/constants/steps';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { getCode } from '@features/auth/services/spotifyAuth';
-import { LoadingSpinner } from '@features/selectArtists/components/Search/LoadingSpinner';
-import { SelectArtists } from '@features/selectArtists/components/SelectArtists';
-import { RefinePlaylist } from '@features/refinePlaylist/components/RefinePlaylist';
-import { Generate } from '@features/generatePlaylist/components/Generate';
-import { useAuth } from '@features/auth/hooks/useAuth';
-import { draftPlaylistAtom } from '@state/playlistAtoms';
-import { useState, useEffect } from 'react';
+import {getCode} from '@features/auth/services/spotifyAuth';
+import {LoadingSpinner} from '@features/selectArtists/components/Search/LoadingSpinner';
+import {SelectArtists} from '@features/selectArtists/components/SelectArtists';
+import {RefinePlaylist} from '@features/refinePlaylist/components/RefinePlaylist';
+import {Generate} from '@features/generatePlaylist/components/Generate';
+import {useAuth} from '@features/auth/hooks/useAuth';
+import {draftPlaylistAtom} from '@state/playlistAtoms';
+
 import { AuthProvider } from '@features/auth/providers/AuthProvider';
 
 const AppContent: React.FC = () => {
@@ -39,31 +39,33 @@ const AppContent: React.FC = () => {
     return <></>;
   };
 
-  return (
-    <>
-      <NavigationBar activeStep={activeStep} setActiveStep={setActiveStep} />
-
-      {isAuthenticated ? (
-        getCurrentScreen()
-      ) : isAuthenticating ? (
-        <LoadingSpinner />
-      ) : (
+  let content;
+  if (isAuthenticated) {
+    content = getCurrentScreen();
+  } else if (isAuthenticating) {
+    content = <LoadingSpinner />;
+  } else {
+    content = (
         <Box textAlign="center" padding={6}>
           <Button variant="contained" role="link" onClick={getCode}>
             Authorize Spotify
           </Button>
         </Box>
-      )}
+    );
+  }
+
+  return (
+    <>
+      <NavigationBar activeStep={activeStep} setActiveStep={setActiveStep} />
+      {content}
     </>
   );
 };
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   return (
     <AuthProvider>
       <AppContent />
     </AuthProvider>
   );
 };
-
-export default App;

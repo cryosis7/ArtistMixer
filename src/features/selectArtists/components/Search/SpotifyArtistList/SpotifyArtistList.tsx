@@ -1,11 +1,13 @@
 import Grid2 from '@mui/material/GridLegacy';
 import React, { useMemo } from 'react';
 import type { ArtistData } from '@state/selectedArtistsAtoms';
+import type { ArtistSearchResponse } from '@shared/types/search';
+import type { SearchArtist } from '@shared/types/artist';
 import { ArtistTile } from './ArtistTile';
 
 interface SpotifyArtistListProps {
-  searchResults: SpotifyApi.SearchResponse;
-  toggleArtist: (item: SpotifyApi.ArtistObjectFull) => void;
+  searchResults: ArtistSearchResponse;
+  toggleArtist: (item: SearchArtist) => void;
   selectedArtists: ArtistData[];
 }
 

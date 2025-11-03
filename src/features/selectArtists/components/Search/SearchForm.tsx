@@ -3,9 +3,11 @@ import TextField from '@mui/material/TextField';
 import Grid2 from '@mui/material/GridLegacy';
 import React, { useState } from 'react';
 import { useAuth } from '@features/auth/hooks/useAuth';
+import { apiGet } from '@shared/utils/apiClient';
+import type { ArtistSearchResponse } from '@shared/types/search';
 
 interface SearchProps {
-  setSearchResults: React.Dispatch<React.SetStateAction<SpotifyApi.SearchResponse>>;
+  setSearchResults: React.Dispatch<React.SetStateAction<ArtistSearchResponse | null>>;
   setIsSearching: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -29,15 +31,9 @@ export const SearchForm: React.FC<SearchProps> = ({ setSearchResults, setIsSearc
   const handleSearch = () => {
     setIsSearching(true);
 
-    const url = 'https://jrfg22ir6f.execute-api.ap-southeast-2.amazonaws.com/api/spotify/search';
-    const params = new URLSearchParams();
-    params.set('q', searchTerm);
-    params.set('type', contentType);
-    params.set('token', token);
-    const requestUrl = `${url}?${params.toString()}`;
-
-    fetch(requestUrl, {
-      method: 'GET',
+    apiGet('/search', token, {
+      q: searchTerm,
+      type: contentType,
     })
       .then((res) => res.json())
       .then((data) => {

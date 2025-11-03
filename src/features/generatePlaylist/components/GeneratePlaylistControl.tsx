@@ -6,6 +6,7 @@ import type { PlaylistContract, Song } from '@shared/types/playlist';
 import { selectedArtistsAtom } from '@state/selectedArtistsAtoms';
 import { draftPlaylistAtom } from '@state/playlistAtoms';
 import { useAuth } from '@features/auth/hooks/useAuth';
+import { apiGet } from '@shared/utils/apiClient';
 
 interface GeneratePlaylistControlProps {
   isLoading: () => boolean;
@@ -21,18 +22,12 @@ export const GeneratePlaylistControl: React.FC<GeneratePlaylistControlProps> = (
   const { token } = useAuth();
   const [playlistSize, setPlaylistSize] = useState<number>(30);
 
-  const url = 'https://jrfg22ir6f.execute-api.ap-southeast-2.amazonaws.com/api/getrandomplaylist';
-  const params = new URLSearchParams();
-  params.set('token', token);
-  params.set('artists', selectedArtists.map((a) => a.id).join(','));
-  params.set('playlistSize', playlistSize.toString());
-  const requestUrl = `${url}?${params.toString()}`;
-
   const generatePlaylist = async () => {
     setIsLoading(true);
 
-    fetch(requestUrl, {
-      method: 'GET',
+    apiGet('/playlists/random', token, {
+      artists: selectedArtists.map((a) => a.id).join(','),
+      playlistSize: playlistSize.toString(),
     })
       .then((res) => res.json())
       .then((data) => {

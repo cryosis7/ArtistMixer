@@ -13,10 +13,10 @@ const SpotifyAuthButton: React.FC<SpotifyAuthButtonProps> = ({ clientId, scopes 
       response_type: 'code',
       client_id: clientId,
       scope: scopes.join(' '),
-      redirect_uri: `${window.location.origin}/ArtistMixer/`,
+      redirect_uri: `${globalThis.location.origin}/ArtistMixer/`,
     }).toString();
 
-    window.location.href = `https://accounts.spotify.com/authorize?${queryParams}`;
+    globalThis.location.href = `https://accounts.spotify.com/authorize?${queryParams}`;
   };
 
   return (

@@ -4,16 +4,18 @@ import { LoadingSpinner } from './LoadingSpinner';
 import { SearchForm } from './SearchForm';
 import { SpotifyArtistList } from './SpotifyArtistList/SpotifyArtistList';
 import { selectedArtistsAtom } from '@state/selectedArtistsAtoms';
+import type { ArtistSearchResponse } from '@shared/types/search';
+import type { SearchArtist } from '@shared/types/artist';
 
 interface SearchContainerProps {
-  toggleArtist: (artists: SpotifyApi.ArtistObjectFull) => void;
+  toggleArtist: (artists: SearchArtist) => void;
 }
 
 export const SearchContainer: React.FC<SearchContainerProps> = ({
   toggleArtist,
 }) => {
   const [selectedArtists] = useAtom(selectedArtistsAtom);
-  const [searchResults, setSearchResults] = useState<SpotifyApi.SearchResponse>({});
+  const [searchResults, setSearchResults] = useState<ArtistSearchResponse | null>(null);
   const [isSearching, setIsSearching] = useState<boolean>(false);
 
   return (
@@ -23,7 +25,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
         setIsSearching={setIsSearching}
       />
       {isSearching && <LoadingSpinner />}
-      {!isSearching && searchResults.artists && (
+      {!isSearching && searchResults?.artists && (
         <SpotifyArtistList
           searchResults={searchResults}
           toggleArtist={toggleArtist}

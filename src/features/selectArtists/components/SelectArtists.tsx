@@ -4,13 +4,14 @@ import { useAtom, useSetAtom } from 'jotai';
 import { SearchContainer } from './Search/SearchContainer';
 import { SelectedArtistsContainer } from './SelectedArtists/SelectedArtistsContainer';
 import { selectedArtistsAtom, addArtistAtom, removeArtistAtom } from '@state/selectedArtistsAtoms';
+import type { SearchArtist } from '@shared/types/artist';
 
 export const SelectArtists: React.FC = () => {
   const [selectedArtists] = useAtom(selectedArtistsAtom);
   const addArtist = useSetAtom(addArtistAtom);
   const removeArtist = useSetAtom(removeArtistAtom);
 
-  const toggleArtist = (artist: SpotifyApi.ArtistObjectFull) => {
+  const toggleArtist = (artist: SearchArtist) => {
     const isSelected = selectedArtists.some((a) => a.id === artist.id);
     if (isSelected) {
       removeArtist(artist.id);

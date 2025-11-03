@@ -4,10 +4,11 @@ import IconButton from '@mui/material/IconButton';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import ListItemText from '@mui/material/ListItemText';
+import type { TrackListItem } from '@shared/types/track';
 
 interface TrackItemProps {
-  track: SpotifyApi.TrackObjectFull;
-  addTrack: (track: SpotifyApi.TrackObjectFull) => void;
+  track: TrackListItem;
+  addTrack: (track: TrackListItem) => void;
 }
 
 /**

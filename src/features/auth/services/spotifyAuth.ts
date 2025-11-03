@@ -6,11 +6,11 @@ const SCOPES = [
 ];
 const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID ?? '';
 
-const BASE_URI = 'https://jrfg22ir6f.execute-api.ap-southeast-2.amazonaws.com/api';
+const BASE_URI = 'https://jrfg22ir6f.execute-api.ap-southeast-2.amazonaws.com/api/auth';
 
 const ENDPOINTS = {
-  AUTHENTICATE: `${BASE_URI}/authenticate`,
-  REFRESH_TOKEN: `${BASE_URI}/refreshToken`,
+  AUTHENTICATE: `${BASE_URI}/token`,
+  REFRESH_TOKEN: `${BASE_URI}/refresh`,
 };
 
 export const getCode = () => {
@@ -18,10 +18,10 @@ export const getCode = () => {
     response_type: 'code',
     client_id: CLIENT_ID,
     scope: SCOPES.join(' '),
-    redirect_uri: `${window.location.origin}/ArtistMixer/`,
+    redirect_uri: `${globalThis.location.origin}/ArtistMixer/`,
   }).toString();
 
-  window.location.href = `https://accounts.spotify.com/authorize?${queryParams}`;
+  globalThis.location.href = `https://accounts.spotify.com/authorize?${queryParams}`;
 };
 
 export const getToken = async (code: string): Promise<string> => {

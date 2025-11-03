@@ -14,7 +14,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Initialize auth on mount
   useEffect(() => {
-    const code = new URLSearchParams(window.location.search).get('code') ?? '';
+    const code = new URLSearchParams(globalThis.location.search).get('code') ?? '';
     const refreshToken = localStorage.getItem('refreshToken');
 
     if (!isAuthenticating && !isAuthenticated && !error) {
@@ -22,15 +22,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setIsAuthenticating(true);
 
         try {
-          const cleanedURL = window.location.href.split('?')[0];
-          window.history.replaceState({}, document.title, cleanedURL);
+          const cleanedURL = globalThis.location.href.split('?')[0];
+          globalThis.history.replaceState({}, document.title, cleanedURL);
           getToken(code)
             .then((value) => {
               setIsAuthenticated(true);
               setToken(value);
             })
-            .catch((reason) => {
-              console.error(reason);
+            .catch((error) => {
+              console.error(error);
               setIsAuthenticated(false);
               setError(true);
             })
