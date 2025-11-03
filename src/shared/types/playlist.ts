@@ -16,8 +16,8 @@ export class Playlist implements PlaylistContract {
 export interface Song {
   id: string;
   name: string;
-  externalUrl: string;
-  previewUrl: string;
+  externalUrl?: string;
+  previewUrl?: string;
   artists: Artist[];
   uri: string;
 }

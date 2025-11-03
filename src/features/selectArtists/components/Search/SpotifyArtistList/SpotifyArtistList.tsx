@@ -21,7 +21,7 @@ export const SpotifyArtistList: React.FC<SpotifyArtistListProps> = ({
   if (searchResults.artists) {
     return (
       <Grid2 container spacing={0.5} columns={{ xs: 1, sm: 3, lg: 4 }}>
-        {searchResults.artists.items.map((artist) => (
+        {searchResults.artists.map((artist) => (
           <Grid2 key={artist.id} xs={1}>
             <ArtistTile
               artist={artist}
