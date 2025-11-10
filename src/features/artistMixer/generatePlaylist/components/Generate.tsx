@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LoadingSpinner } from '@features/selectArtists/components/Search/LoadingSpinner';
+import { LoadingSpinner } from '@features/artistMixer/selectArtists/components/Search/LoadingSpinner';
 import Grid2 from '@mui/material/GridLegacy';
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
 import Typography from '@mui/material/Typography';

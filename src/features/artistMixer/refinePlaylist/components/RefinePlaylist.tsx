@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { useAtom } from 'jotai';
 import { steps } from '@shared/constants/steps';
 import { DraftPlaylist } from './DraftPlaylist';
-import { createSpotifyPlaylist } from '@features/generatePlaylist/services/createSpotifyPlaylist';
+import { createSpotifyPlaylist } from '@features/artistMixer/generatePlaylist/services/createSpotifyPlaylist';
 import { draftPlaylistAtom } from '@state/playlistAtoms';
 import { useAuth } from '@features/auth/hooks/useAuth';
 
