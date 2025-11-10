@@ -1,16 +1,13 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
-import { MemoryRouter } from 'react-router-dom';
-import { AuthProvider } from '@features/auth/providers/AuthProvider';
-import { PlaylistMixerPage } from '@pages/index';
+import App from './App';
+import { AuthProvider } from './providers/AuthProvider';
 
 test('renders App without crashing', () => {
   const { container } = render(
     <AuthProvider>
-      <MemoryRouter>
-        <PlaylistMixerPage />
-      </MemoryRouter>
+      <App />
     </AuthProvider>
   );
   expect(container.firstChild).toBeTruthy();
