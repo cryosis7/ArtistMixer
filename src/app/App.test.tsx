@@ -1,14 +1,7 @@
-import React from 'react';
 import { render } from '@testing-library/react';
-import '@testing-library/jest-dom/vitest';
-import App from './App';
-import { AuthProvider } from './providers/AuthProvider';
+import { App } from './App';
 
 test('renders App without crashing', () => {
-  const { container } = render(
-    <AuthProvider>
-      <App />
-    </AuthProvider>
-  );
+  const { container } = render(<App />);
   expect(container.firstChild).toBeTruthy();
 });
